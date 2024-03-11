@@ -1,0 +1,11 @@
+*~
+a.out
+*.a
+*.log
+*.o
+*.gcda
+*.gcno
+*.json
+mysh
+unit_tests
+/tester
