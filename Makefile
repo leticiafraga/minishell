@@ -20,6 +20,7 @@ SRC_FN	=	run_prog.c \
 			helpers/free_env.c \
 			helpers/put_arg_err.c \
 			helpers/free_seps.c \
+			redirections/handle_semicolon.c \
 			find_seps.c
 
 SRC     =	main.c	\

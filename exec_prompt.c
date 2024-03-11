@@ -11,6 +11,7 @@
 #include "include/my.h"
 #include "include/shell.h"
 #include "include/linked_list.h"
+#include "include/redirections_fn.h"
 
 int is_exit(char *line)
 {
@@ -24,6 +25,19 @@ static void handle_tty(void)
         my_putstr("$> ");
 }
 
+static int run_cmds(linked_list_t **env,
+    redirection_map *red, char **cmds)
+{
+    int status = 0;
+    sep symbol;
+
+    for (int i = 0; i < red->cnt; i++) {
+        symbol = red->arr[i]->symbol;
+        status = (redirections_fn[symbol])(cmds[i], env);
+    }
+    return status;
+}
+
 int run_all(char *line, linked_list_t **env, redirection_map *red)
 {
     char *cmd = malloc(sizeof(char) * 100);
@@ -31,15 +45,19 @@ int run_all(char *line, linked_list_t **env, redirection_map *red)
     int cur = 0;
     char *cur_pos = line;
     int status;
+    char **cmds = malloc(sizeof(char *) * (red->cnt + 1));
 
     for (int i = 0; i < red->cnt; i++) {
         len = red->arr[i]->prev_cmd_end - cur + 1;
         cmd = my_strncpy(cmd, cur_pos, len);
-        status = run_prog(cmd, env);
+        cmds[i] = my_strdup(cmd);
         cur = red->arr[i]->next_cmd_index;
         cur_pos = line + cur;
     }
+    cmds[red->cnt] = 0;
     free(cmd);
+    status = run_cmds(env, red, cmds);
+    free_ptr_arr(cmds);
     return status;
 }
 

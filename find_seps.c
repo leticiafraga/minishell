@@ -94,7 +94,7 @@ int it_line(redirection_map *red, int len, char *line)
     for (int i = 0; i < len; i++) {
         switch (line[i]) {
             case ';':
-                create_sep(semic, i, red);
+                create_sep(semicolon, i, red);
                 break;
             case '|':
                 create_sep(pipe_symbol, i, red);

@@ -7,9 +7,10 @@
 
 #ifndef REDIRECTION_H
     #define REDIRECTION_H
+    #include "linked_list.h"
 
 typedef enum sep {
-    semic,
+    semicolon,
     pipe_symbol,
     in1,
     in2,
@@ -31,5 +32,6 @@ typedef struct {
 
 redirection_map *find_seps(char *line);
 int free_seps(redirection_map *r);
+int handle_semicolon(char *args, linked_list_t **env);
 
 #endif
