@@ -35,6 +35,4 @@ void free_ptr_arr(char **args);
 
 void put_arg_err(char *arg, char *err);
 
-redirection_map *find_seps(char *line);
-
 #endif

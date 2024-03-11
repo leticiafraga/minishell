@@ -53,6 +53,7 @@ static int create_sep(sep s, int i, redirection_map *red)
 
     new->symbol = s;
     new->next_cmd_index = i + 1;
+    new->prev_cmd_end = i - 1;
     add_to_map(new, red);
 }
 
@@ -63,12 +64,11 @@ static int create_in(int i, redirection_map *red, char *line)
     if (one_or_two_char(line, i, '<')) {
         new->symbol = in2;
         new->next_cmd_index = i + 2;
+        new->prev_cmd_end = i - 1;
         add_to_map(new, red);
         return 1;
     } else {
-        new->symbol = in1;
-        new->next_cmd_index = i + 1;
-        add_to_map(new, red);
+        create_sep(in1, i, red);
         return 0;
     }
 }
@@ -80,12 +80,11 @@ static int create_out(int i, redirection_map *red, char *line)
     if (one_or_two_char(line, i, '>')) {
         new->symbol = out2;
         new->next_cmd_index = i + 2;
+        new->prev_cmd_end = i - 1;
         add_to_map(new, red);
         return 1;
     } else {
-        new->symbol = out1;
-        new->next_cmd_index = i + 1;
-        add_to_map(new, red);
+        create_sep(out1, i, red);
         return 0;
     }
 }
@@ -121,5 +120,6 @@ redirection_map *find_seps(char *line)
     red->cnt = 0;
     red->arr = malloc(sizeof(redirection_opts *) * (cnt + 1));
     it_line(red, len, line);
+    create_sep(end, len, red);
     return red;
 }

@@ -12,30 +12,45 @@
 #include "include/shell.h"
 #include "include/linked_list.h"
 
-static int free_seps(redirection_map *r)
-{
-    for (int i = 0; i < r->cnt; i++) {
-        free(r->arr[i]);
-    }
-    free(r->arr);
-    free(r);
-}
-
 int is_exit(char *line)
 {
     return my_strcmp(line, "exit\n") == 0
         || my_strcmp(line, "exit") == 0;
 }
 
+static void handle_tty(void)
+{
+    if (isatty(0))
+        my_putstr("$> ");
+}
+
+int run_all(char *line, linked_list_t **env, redirection_map *red)
+{
+    char *cmd = malloc(sizeof(char) * 100);
+    int len;
+    int cur = 0;
+    char *cur_pos = line;
+    int status;
+
+    for (int i = 0; i < red->cnt; i++) {
+        len = red->arr[i]->prev_cmd_end - cur + 1;
+        cmd = my_strncpy(cmd, cur_pos, len);
+        status = run_prog(cmd, env);
+        cur = red->arr[i]->next_cmd_index;
+        cur_pos = line + cur;
+    }
+    free(cmd);
+    return status;
+}
+
 int prompt(size_t bufsize, char *line, linked_list_t **env)
 {
     int status = 0;
     size_t characters;
-    int tty = isatty(0);
+    redirection_map *r;
 
     while (1) {
-        if (tty)
-            my_putstr("$> ");
+        handle_tty();
         characters = getline(&line, &bufsize, stdin);
         if (characters == -1)
             break;
@@ -45,7 +60,9 @@ int prompt(size_t bufsize, char *line, linked_list_t **env)
             status = 0;
             break;
         }
-        status = run_prog(line, env);
+        r = find_seps(line);
+        status = run_all(line, env, r);
+        free_seps(r);
     }
     return status;
 }

@@ -19,6 +19,7 @@ SRC_FN	=	run_prog.c \
 			helpers/getenv_list.c \
 			helpers/free_env.c \
 			helpers/put_arg_err.c \
+			helpers/free_seps.c \
 			find_seps.c
 
 SRC     =	main.c	\
@@ -33,7 +34,8 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/test_handle_cd.c \
 				tests/test_handle_env.c \
 				tests/test_handle_setenv.c \
-				tests/test_handle_unsetenv.c
+				tests/test_handle_unsetenv.c \
+				tests/test_find_seps.c
 
 TESTS	=	unit_tests
 
