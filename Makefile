@@ -26,7 +26,8 @@ SRC_FN	=	run_prog.c \
 			redirections/handle_redir_stdout.c \
 			redirections/handle_redir_stdout_append.c \
 			redirections/handle_redir_stdin.c \
-			find_seps.c
+			find_seps.c \
+			sep_semicolon.c
 
 SRC     =	main.c	\
 			exec_prompt.c \

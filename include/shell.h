@@ -32,6 +32,7 @@ int add_item(char *key, char *value, linked_list_t **env);
 
 void free_env(linked_list_t *list);
 void free_ptr_arr(char **args);
+void free_ptr_arr_content(char **args);
 char *clear_filename(char *prev);
 
 void put_arg_err(char *arg, char *err);

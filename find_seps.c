@@ -23,7 +23,7 @@ static int cnt_cmds(char *line)
     int cnt = 0;
 
     for (int i = 0; i < len; i++) {
-        if (line[i] == ';' || line[i] == '|')
+        if (line[i] == '|')
             cnt ++;
         switch (line[i]) {
             case '>':
@@ -93,9 +93,6 @@ int it_line(redirection_map *red, int len, char *line)
 {
     for (int i = 0; i < len; i++) {
         switch (line[i]) {
-            case ';':
-                create_sep(semicolon, i, red);
-                break;
             case '|':
                 create_sep(pipe_symbol, i, red);
                 break;
@@ -122,4 +119,39 @@ redirection_map *find_seps(char *line)
     it_line(red, len, line);
     create_sep(end, len, red);
     return red;
+}
+
+int get_cmds_text(redirection_map *r, char *line)
+{
+    int cur = 0;
+    char *cur_pos = line;
+    char *cmd = malloc(sizeof(char) * 500);
+    int len;
+
+    for (int i = 0; i < r->cnt; i++) {
+        len = r->arr[i]->prev_cmd_end - cur + 1;
+        cmd = my_strncpy(cmd, cur_pos, len);
+        r->arr[i]->cmd = my_strdup(cmd);
+        cur = r->arr[i]->next_cmd_index;
+        cur_pos = line + cur;
+    }
+    free(cmd);
+}
+
+redirection_map **get_cmds(redirection_map_semic *semic)
+{
+    redirection_map **r = malloc(sizeof(redirection_map*) * (semic->cnt + 1));
+    char *cmd = malloc(sizeof(char) * 100);
+    int len;
+    int cur = 0;
+    char *cur_pos;
+    char *line;
+
+    for (int j = 0; j < semic->cnt; j++) {
+        line = semic->arr[j];
+        r[j] = find_seps(line);
+        get_cmds_text(r[j], line);
+    }
+    free(cmd);
+    return r;
 }

@@ -23,6 +23,7 @@ typedef struct {
     sep symbol;
     int next_cmd_index;
     int prev_cmd_end;
+    char *cmd;
 } redirection_opts;
 
 typedef struct {
@@ -30,8 +31,18 @@ typedef struct {
     int cnt;
 } redirection_map;
 
+typedef struct {
+    char **arr;
+    int cnt;
+} redirection_map_semic;
+
 redirection_map *find_seps(char *line);
+redirection_map_semic *sep_semicolon(char *line);
+redirection_map **get_cmds(redirection_map_semic *semic);
+
 int free_seps(redirection_map *r);
+void free_ptr_arr_content(char **args);
+
 int handle_semicolon(char **args, linked_list_t **env, int *index);
 int handle_pipe(char **args, linked_list_t **env, int *index);
 int handle_redir_stdout(char **args, linked_list_t **env, int *index);

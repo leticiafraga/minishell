@@ -38,26 +38,27 @@ static int run_cmds(linked_list_t **env,
     return status;
 }
 
-int run_all(char *line, linked_list_t **env, redirection_map *red)
+int run_all(linked_list_t **env, redirection_map_semic *s)
 {
-    char *cmd = malloc(sizeof(char) * 100);
-    int len;
-    int cur = 0;
-    char *cur_pos = line;
+    redirection_map **r;
+    redirection_map *red;
+    char **cmds;
     int status;
-    char **cmds = malloc(sizeof(char *) * (red->cnt + 1));
 
-    for (int i = 0; i < red->cnt; i++) {
-        len = red->arr[i]->prev_cmd_end - cur + 1;
-        cmd = my_strncpy(cmd, cur_pos, len);
-        cmds[i] = my_strdup(cmd);
-        cur = red->arr[i]->next_cmd_index;
-        cur_pos = line + cur;
+    r = get_cmds(s);
+    for (int i = 0; i < s->cnt; i++) {
+        red = r[i];
+        cmds = malloc(sizeof(char *) * (red->cnt + 1));
+        for (int i = 0; i < red->cnt; i++) {
+            cmds[i] = my_strdup(red->arr[i]->cmd);
+        }
+        cmds[red->cnt] = 0;
+        status = run_cmds(env, red, cmds);
+        free_seps(red);
+        free_ptr_arr_content(cmds);
     }
-    cmds[red->cnt] = 0;
-    free(cmd);
-    status = run_cmds(env, red, cmds);
-    free_ptr_arr(cmds);
+    free(r);
+    free(cmds);
     return status;
 }
 
@@ -65,7 +66,7 @@ int prompt(size_t bufsize, char *line, linked_list_t **env)
 {
     int status = 0;
     size_t characters;
-    redirection_map *r;
+    redirection_map_semic *s;
 
     while (1) {
         handle_tty();
@@ -78,9 +79,9 @@ int prompt(size_t bufsize, char *line, linked_list_t **env)
             status = 0;
             break;
         }
-        r = find_seps(line);
-        status = run_all(line, env, r);
-        free_seps(r);
+        s = sep_semicolon(line);
+        status = run_all(env, s);
+        free_semic(s);
     }
     return status;
 }

@@ -38,3 +38,15 @@ void free_ptr_arr(char **args)
     }
     free(args);
 }
+
+void free_ptr_arr_content(char **args)
+{
+    int i = 0;
+
+    if (args == 0)
+        return;
+    while (args[i] != 0) {
+        free(args[i]);
+        i++;
+    }
+}
