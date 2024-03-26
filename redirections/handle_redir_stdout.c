@@ -45,7 +45,6 @@ int handle_redir_stdout(char **args, linked_list_t **env, int *index)
     dup(fd);
     close(fd);
     status = run_prog(args[*index], env);
-    fflush(stdout);
     dup2(dupout, 1);
     close(dupout);
     (*index) += 1;
