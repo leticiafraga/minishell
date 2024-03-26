@@ -26,7 +26,7 @@ static char **get_paths(char *name, linked_list_t *env)
     return paths;
 }
 
-static int handle_signaled(int status, pid_t child)
+static int handle_signaled(int status)
 {
     if (WTERMSIG(status) == SIGSEGV)
         my_put_err("Segmentation fault");
@@ -41,13 +41,13 @@ static int handle_signaled(int status, pid_t child)
     return status;
 }
 
-int handle_status(int status, pid_t child)
+int handle_status(int status)
 {
     if (WIFEXITED(status)) {
         return WEXITSTATUS(status);
     }
     if (WIFSIGNALED(status)) {
-        return handle_signaled(status, child);
+        return handle_signaled(status);
     }
     return 84;
 }
@@ -73,22 +73,20 @@ int handle_fork(char **args, char **arr, char **paths,
     return status;
 }
 
-int run_prog(char *argv, linked_list_t **env1)
+int run_prog(char *argv, linked_list_t **env)
 {
-    linked_list_t *env = *env1;
     char **args = my_str_to_word_array(argv);
-    pid_t child;
     int status;
-    char **arr = getenv_arr(env);
-    char **paths = get_paths(args[0], env);
+    char **arr = getenv_arr(*env);
+    char **paths = get_paths(args[0], *env);
 
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {
-            status = handle_status(handle_fork(args, arr, paths, env), child);
+            status = handle_status(handle_fork(args, arr, paths, *env));
             break;
         }
         if (my_strcmp(args[0], commands[i]) == 0) {
-            status = ((commands_fn[i])(args, env1));
+            status = ((commands_fn[i])(args, env));
             break;
         }
     }

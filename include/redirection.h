@@ -32,6 +32,8 @@ typedef struct {
 
 redirection_map *find_seps(char *line);
 int free_seps(redirection_map *r);
-int handle_semicolon(char *args, linked_list_t **env);
+int handle_semicolon(char **args, linked_list_t **env, int *index);
+int handle_pipe(char **args, linked_list_t **env, int *index);
+int handle_redir_stdout(char **args, linked_list_t **env, int *index);
 
 #endif

@@ -9,12 +9,12 @@
     #define REDIRECTION_FN_H
     #include "redirection.h"
 
-int (*redirections_fn[]) (char *args, linked_list_t **env) = {
+int (*redirections_fn[]) (char **args, linked_list_t **env, int *index) = {
     &handle_semicolon,
     &handle_semicolon,
     &handle_semicolon,
     &handle_semicolon,
-    &handle_semicolon,
+    &handle_redir_stdout,
     &handle_semicolon,
     &handle_semicolon,
     0

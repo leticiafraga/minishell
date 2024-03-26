@@ -21,6 +21,8 @@ SRC_FN	=	run_prog.c \
 			helpers/put_arg_err.c \
 			helpers/free_seps.c \
 			redirections/handle_semicolon.c \
+			redirections/handle_pipe.c \
+			redirections/handle_redir_stdout.c \
 			find_seps.c
 
 SRC     =	main.c	\
