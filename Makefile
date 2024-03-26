@@ -16,6 +16,7 @@ SRC_FN	=	run_prog.c \
 			list/delete_in_list.c \
 			list/add_item.c \
 			my_getenv.c \
+			helpers/clear_filename.c \
 			helpers/getenv_list.c \
 			helpers/free_env.c \
 			helpers/put_arg_err.c \
@@ -23,6 +24,7 @@ SRC_FN	=	run_prog.c \
 			redirections/handle_semicolon.c \
 			redirections/handle_pipe.c \
 			redirections/handle_redir_stdout.c \
+			redirections/handle_redir_stdout_append.c \
 			find_seps.c
 
 SRC     =	main.c	\

@@ -35,5 +35,7 @@ int free_seps(redirection_map *r);
 int handle_semicolon(char **args, linked_list_t **env, int *index);
 int handle_pipe(char **args, linked_list_t **env, int *index);
 int handle_redir_stdout(char **args, linked_list_t **env, int *index);
+int handle_redir_stdout_append(
+    char **args, linked_list_t **env, int *index);
 
 #endif
