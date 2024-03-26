@@ -12,7 +12,7 @@
 int (*redirections_fn[]) (char **args, linked_list_t **env, int *index) = {
     &handle_semicolon,
     &handle_semicolon,
-    &handle_semicolon,
+    &handle_redir_stdin,
     &handle_semicolon,
     &handle_redir_stdout,
     &handle_redir_stdout_append,
