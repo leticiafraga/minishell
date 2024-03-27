@@ -13,28 +13,64 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
-static int handle_fork(int mypipe[2], char **env)
+static int handle_fork(int p_read, int p_write,
+    char *args, linked_list_t **env)
 {
     pid_t child = fork();
     int status = 0;
+    char **cmdargs = my_str_to_word_array(args);
+    char **arrenv = getenv_arr(*env);
+    char **paths = get_paths(args[0], *env);
 
     if (child == 0) {
-        dup2(mypipe[1], 1);
-        return execvp(env[0], env);
+        if (p_read != 0)
+            dup2(p_read, 0);
+        dup2(p_write, 1);
+        handle_exec(cmdargs, arrenv, paths, *env);
     } else {
-        dup2(mypipe[0], 0);
+        close(p_read);
+        close(p_write);
         waitpid(child, &status, 0);
-        close(mypipe[1]);
     }
+    free_ptr_arr(cmdargs);
+    return status;
+}
+
+static int handle_second(char *args, linked_list_t **env)
+{
+    pid_t child = fork();
+    int status = 0;
+    char **cmdargs = my_str_to_word_array(args);
+    char **arrenv = getenv_arr(*env);
+    char **paths = get_paths(args[0], *env);
+
+    if (child == 0) {
+        handle_exec(cmdargs, arrenv, paths, *env);
+    } else {
+        waitpid(child, &status, 0);
+    }
+    free_ptr_arr(cmdargs);
     return status;
 }
 
 int handle_pipe(char **args, linked_list_t **env, int *index)
 {
     int mypipe[2];
-    char **arrenv = getenv_arr(*env);
+    int p_read = 0;
+    int stdin_copy = dup(STDIN_FILENO);
+    int stdout_copy = dup(STDOUT_FILENO);
+    int status;
 
     if (pipe(mypipe))
         return 84;
-    return handle_fork(mypipe, arrenv);
+    handle_fork(p_read, mypipe[1], args[*index], env);
+    p_read = mypipe[0];
+    if (p_read != 0) {
+        dup2(p_read, 0);
+    }
+    (*index += 1);
+    status = handle_second(args[*index], env);
+    dup2(stdin_copy, 0);
+    dup2(stdout_copy, 1);
+    return status;
 }

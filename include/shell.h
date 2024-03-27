@@ -37,4 +37,6 @@ char *clear_filename(char *prev);
 
 void put_arg_err(char *arg, char *err);
 
+char **get_paths(char *name, linked_list_t *env);
+
 #endif

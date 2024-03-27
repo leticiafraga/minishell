@@ -15,7 +15,7 @@
 #include "include/shell.h"
 #include "include/commands.h"
 
-static char **get_paths(char *name, linked_list_t *env)
+char **get_paths(char *name, linked_list_t *env)
 {
     char *path_var = my_getenv(env, "PATH");
     char **paths;

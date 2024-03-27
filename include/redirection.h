@@ -20,10 +20,10 @@ typedef enum sep {
 } sep;
 
 typedef struct {
+    char *cmd;
     sep symbol;
     int next_cmd_index;
     int prev_cmd_end;
-    char *cmd;
 } redirection_opts;
 
 typedef struct {
