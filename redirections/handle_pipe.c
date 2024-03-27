@@ -20,17 +20,19 @@ static int handle_fork(int p_read, int p_write,
     int status = 0;
     char **cmdargs = my_str_to_word_array(args);
     char **arrenv = getenv_arr(*env);
-    char **paths = get_paths(args[0], *env);
+    char **paths = get_paths(cmdargs[0], *env);
 
     if (child == 0) {
-        if (p_read != 0)
+        if (p_read != 0) {
             dup2(p_read, 0);
+            close(p_read);
+        }
         dup2(p_write, 1);
+        close(p_write);
         handle_exec(cmdargs, arrenv, paths, *env);
     } else {
         close(p_read);
         close(p_write);
-        waitpid(child, &status, 0);
     }
     free_ptr_arr(cmdargs);
     return status;
@@ -42,7 +44,7 @@ static int handle_second(char *args, linked_list_t **env)
     int status = 0;
     char **cmdargs = my_str_to_word_array(args);
     char **arrenv = getenv_arr(*env);
-    char **paths = get_paths(args[0], *env);
+    char **paths = get_paths(cmdargs[0], *env);
 
     if (child == 0) {
         handle_exec(cmdargs, arrenv, paths, *env);
@@ -70,6 +72,7 @@ int handle_pipe(char **args, linked_list_t **env, int *index)
     }
     (*index += 1);
     status = handle_second(args[*index], env);
+    wait(NULL);
     dup2(stdin_copy, 0);
     dup2(stdout_copy, 1);
     return status;

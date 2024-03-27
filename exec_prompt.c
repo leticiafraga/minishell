@@ -13,6 +13,12 @@
 #include "include/linked_list.h"
 #include "include/redirections_fn.h"
 
+static int free_vars(redirection_map *red, char **cmds)
+{
+    free_seps(red);
+    free_ptr_arr_content(cmds);
+}
+
 int is_exit(char *line)
 {
     return my_strcmp(line, "exit\n") == 0
@@ -54,8 +60,7 @@ int run_all(linked_list_t **env, redirection_map_semic *s)
         }
         cmds[red->cnt] = 0;
         status = run_cmds(env, red, cmds);
-        free_seps(red);
-        free_ptr_arr_content(cmds);
+        free_vars(red, cmds);
     }
     free(r);
     free(cmds);
