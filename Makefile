@@ -41,6 +41,7 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/test_handle_cd.c \
 				tests/test_handle_env.c \
 				tests/test_handle_pipe.c \
+				tests/test_handle_redir_stdin.c \
 				tests/test_handle_redir_stdout.c \
 				tests/test_handle_semicolon.c \
 				tests/test_handle_setenv.c \
