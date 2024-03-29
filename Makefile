@@ -6,6 +6,7 @@
 ##
 
 SRC_FN	=	run_prog.c \
+			exec_prompt.c \
 			handle_commands/handle_cd.c \
 			handle_commands/handle_env.c \
 			handle_commands/handle_exec.c \
@@ -30,7 +31,6 @@ SRC_FN	=	run_prog.c \
 			sep_semicolon.c
 
 SRC     =	main.c	\
-			exec_prompt.c \
 			$(SRC_FN)
 
 TEST_SRC	= 	$(SRC_FN)	\
@@ -40,6 +40,7 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/test_run_prog.c \
 				tests/test_handle_cd.c \
 				tests/test_handle_env.c \
+				tests/test_handle_pipe.c \
 				tests/test_handle_setenv.c \
 				tests/test_handle_unsetenv.c \
 				tests/test_find_seps.c

@@ -12,6 +12,7 @@
 
 int exec_prompt(int argc, char **argv, char **env);
 int run_prog(char *argv, linked_list_t **env);
+int run_all(linked_list_t **env, redirection_map_semic *s);
 char *my_getenv(linked_list_t *env, char *var);
 int try_paths(char **args, char **env, char **paths);
 linked_list_t *getenv_list(char **arr);

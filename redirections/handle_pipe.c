@@ -13,6 +13,13 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
+static void free_vars(char **args, char **arr, char **paths)
+{
+    free_ptr_arr(args);
+    free_ptr_arr(arr);
+    free_ptr_arr(paths);
+}
+
 static int handle_fork(int p_read, int p_write,
     char *args, linked_list_t **env)
 {
@@ -33,8 +40,8 @@ static int handle_fork(int p_read, int p_write,
     } else {
         close(p_read);
         close(p_write);
+        free_vars(cmdargs, arrenv, paths);
     }
-    free_ptr_arr(cmdargs);
     return status;
 }
 
@@ -50,8 +57,8 @@ static int handle_second(char *args, linked_list_t **env)
         handle_exec(cmdargs, arrenv, paths, *env);
     } else {
         waitpid(child, &status, 0);
+        free_vars(cmdargs, arrenv, paths);
     }
-    free_ptr_arr(cmdargs);
     return status;
 }
 
