@@ -16,7 +16,7 @@
 static int free_vars(redirection_map *red, char **cmds)
 {
     free_seps(red);
-    free_ptr_arr_content(cmds);
+    free_ptr_arr(cmds);
 }
 
 int is_exit(char *line)
@@ -49,7 +49,7 @@ int run_all(linked_list_t **env, redirection_map_semic *s)
     redirection_map **r;
     redirection_map *red;
     char **cmds;
-    int status;
+    int status = 0;
 
     r = get_cmds(s);
     for (int i = 0; i < s->cnt; i++) {
@@ -63,7 +63,6 @@ int run_all(linked_list_t **env, redirection_map_semic *s)
         free_vars(red, cmds);
     }
     free(r);
-    free(cmds);
     return status;
 }
 
