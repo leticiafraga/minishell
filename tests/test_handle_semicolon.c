@@ -6,28 +6,28 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
-Test(handle_pipe_test, basic_test, .init=cr_redirect_stdout)
+Test(handle_semicolon_test, basic_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic *s = sep_semicolon("ls | grep run_prog.c");
+    redirection_map_semic *s = sep_semicolon("ls run_prog.c;cat tests/cattest");
 
     int res = run_all(&env, s);
 
     cr_assert_eq(res, 0);
-    cr_assert_stdout_eq_str("run_prog.c\n");
+    cr_assert_stdout_eq_str("run_prog.c\nhola\n");
     free(env);
     free_semic(s);
 }
 
-Test(handle_pipe_test, multiple_pipe, .init=cr_redirect_stdout)
+Test(handle_semicolon_test, more_complex_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic *s = sep_semicolon("ls | grep run_prog.c | wc -l");
+    redirection_map_semic *s = sep_semicolon("ls run_prog.c; cat tests/cattest | wc -w");
 
     int res = run_all(&env, s);
 
     cr_assert_eq(res, 0);
-    cr_assert_stdout_eq_str("1\n");
+    cr_assert_stdout_eq_str("run_prog.c\n1\n");
     free(env);
     free_semic(s);
 }

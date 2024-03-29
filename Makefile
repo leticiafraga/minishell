@@ -41,6 +41,8 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/test_handle_cd.c \
 				tests/test_handle_env.c \
 				tests/test_handle_pipe.c \
+				tests/test_handle_redir_stdout.c \
+				tests/test_handle_semicolon.c \
 				tests/test_handle_setenv.c \
 				tests/test_handle_unsetenv.c \
 				tests/test_find_seps.c
@@ -80,7 +82,7 @@ clean:
 
 fclean:	clean
 	cd lib/my && make fclean && cd ../..
-	rm -f $(NAME) $(TESTS) $(MY_SEGFAULT)
+	rm -f $(NAME) $(TESTS) $(MY_SEGFAULT) lsresult*
 
 re:     fclean all
 
