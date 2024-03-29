@@ -44,11 +44,15 @@ int free_seps(redirection_map *r);
 int free_semic(redirection_map_semic *r);
 void free_ptr_arr_content(char **args);
 
-int handle_semicolon(char **args, linked_list_t **env, int *index);
-int handle_pipe(char **args, linked_list_t **env, int *index);
-int handle_redir_stdout(char **args, linked_list_t **env, int *index);
-int handle_redir_stdout_append(
-    char **args, linked_list_t **env, int *index);
-int handle_redir_stdin(char **args, linked_list_t **env, int *index);
+int handle_semicolon(char **args, linked_list_t **env, int *index,
+    redirection_map *red);
+int handle_pipe(char **args, linked_list_t **env, int *index,
+    redirection_map *red);
+int handle_redir_stdout(char **args, linked_list_t **env, int *index,
+    redirection_map *red);
+int handle_redir_stdout_append(char **args, linked_list_t **env,
+    int *index, redirection_map *red);
+int handle_redir_stdin(char **args, linked_list_t **env, int *index,
+    redirection_map *red);
 
 #endif

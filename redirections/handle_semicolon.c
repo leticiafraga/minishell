@@ -12,7 +12,8 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
-int handle_semicolon(char **args, linked_list_t **env, int *index)
+int handle_semicolon(char **args, linked_list_t **env,
+    int *index, redirection_map *red)
 {
     return run_prog(args[*index], env);
 }

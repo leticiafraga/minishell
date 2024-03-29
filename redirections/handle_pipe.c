@@ -55,25 +55,40 @@ static int handle_second(char *args, linked_list_t **env)
     return status;
 }
 
-int handle_pipe(char **args, linked_list_t **env, int *index)
+static int restore_copies(int copies[2])
+{
+    dup2(copies[0], 0);
+    dup2(copies[1], 1);
+}
+
+static int handle_inner(char **args, linked_list_t **env, int *index,
+    redirection_map *red)
 {
     int mypipe[2];
     int p_read = 0;
-    int stdin_copy = dup(STDIN_FILENO);
-    int stdout_copy = dup(STDOUT_FILENO);
     int status;
 
-    if (pipe(mypipe))
-        return 84;
-    handle_fork(p_read, mypipe[1], args[*index], env);
-    p_read = mypipe[0];
-    if (p_read != 0) {
-        dup2(p_read, 0);
+    while (red->arr[*index]->symbol == pipe_symbol) {
+        if (pipe(mypipe))
+            return 84;
+        handle_fork(p_read, mypipe[1], args[*index], env);
+        p_read = mypipe[0];
+        if (p_read != 0) {
+            dup2(p_read, 0);
+        }
+        (*index += 1);
     }
-    (*index += 1);
     status = handle_second(args[*index], env);
     wait(NULL);
-    dup2(stdin_copy, 0);
-    dup2(stdout_copy, 1);
+    return status;
+}
+
+int handle_pipe(char **args, linked_list_t **env, int *index,
+    redirection_map *red)
+{
+    int copies[2] = { dup(STDIN_FILENO), dup(STDOUT_FILENO) };
+    int status = handle_inner(args, env, index, red);
+
+    restore_copies(copies);
     return status;
 }

@@ -39,7 +39,7 @@ static int run_cmds(linked_list_t **env,
 
     for (int i = 0; i < red->cnt; i++) {
         symbol = red->arr[i]->symbol;
-        status = (redirections_fn[symbol])(cmds, env, &i);
+        status = (redirections_fn[symbol])(cmds, env, &i, red);
     }
     return status;
 }
