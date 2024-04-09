@@ -14,6 +14,22 @@
 #include "../include/linked_list.h"
 #include "../include/redirections_fn.h"
 
+static const char *commands[5] = {
+    "cd",
+    "env",
+    "setenv",
+    "unsetenv",
+    0
+};
+
+static int (*commands_fn[5]) (char **args, linked_list_t **env) = {
+    &handle_cd,
+    &handle_env,
+    &handle_setenv,
+    &handle_unsetenv,
+    0
+};
+
 static void free_vars(char **args, char **arr, char **paths)
 {
     free_ptr_arr(args);
@@ -92,16 +108,36 @@ static int handle_fork(int p_read, int p_write,
     return status;
 }
 
+static int handle_fork_2(cmd_state *state,
+    linked_list_t *env)
+{
+    pid_t child;
+    int status = 0;
+
+    child = fork();
+    if (child == 0) {
+        handle_exec(state->cmdargs, state->arrenv, state->paths, env);
+    } else
+        waitpid(child, &status, 0);
+    return status;
+}
+
 static int handle_second(char *args, linked_list_t **env, int *status)
 {
-    pid_t child = fork();
     cmd_state *state = getcmd_state(args, env);
 
-    if (child == 0) {
-        handle_exec_inner(args, env);
-    } else {
-        waitpid(child, status, 0);
+    for (int i = 0; i < 5; i++) {
+        if (commands[i] == 0) {
+            *status = handle_status(
+                handle_fork_2(state, *env));
+            break;
+        }
+        if (my_strcmp(state->cmdargs[0], commands[i]) == 0) {
+            *status = (commands_fn[i])(state->cmdargs, env);
+            break;
+        }
     }
+    free_cmd_state(state);
     return *status;
 }
 

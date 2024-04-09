@@ -1,0 +1,2 @@
+echo "/bin/ls -l" | ./mysh
+echo "ls -l" | ./mysh

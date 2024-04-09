@@ -88,7 +88,7 @@ fclean:	clean
 
 re:     fclean all
 
-tester:		$(NAME)
-	cd tester && cp ../mysh . && ./tester.sh
+tester:		all
+	cd tests/tester && cp ../../mysh . && ./tester.sh
 
 .PHONY: lib $(NAME) $(MY_SEGFAULT)
