@@ -11,8 +11,6 @@
 
 int (*redirections_fn[]) (char **args, linked_list_t **env,
     int *index, redirection_map *red) = {
-    &handle_semicolon,
-    &handle_pipe,
     &handle_redir_stdin,
     &handle_semicolon,
     &handle_redir_stdout,

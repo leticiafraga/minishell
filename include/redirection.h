@@ -10,13 +10,12 @@
     #include "linked_list.h"
 
 typedef enum sep {
-    semicolon,
-    pipe_symbol,
     in1,
     in2,
     out1,
     out2,
-    end
+    end,
+    pipe_symbol
 } sep;
 
 typedef struct {
@@ -38,15 +37,14 @@ typedef struct {
 
 redirection_map *find_seps(char *line);
 redirection_map_semic *sep_semicolon(char *line);
-redirection_map **get_cmds(redirection_map_semic *semic);
+redirection_map *get_cmds(char *semic);
+redirection_map **get_pipes(redirection_map_semic *semic);
 
 int free_seps(redirection_map *r);
 int free_semic(redirection_map_semic *r);
 void free_ptr_arr_content(char **args);
 
 int handle_semicolon(char **args, linked_list_t **env, int *index,
-    redirection_map *red);
-int handle_pipe(char **args, linked_list_t **env, int *index,
     redirection_map *red);
 int handle_redir_stdout(char **args, linked_list_t **env, int *index,
     redirection_map *red);
@@ -55,4 +53,5 @@ int handle_redir_stdout_append(char **args, linked_list_t **env,
 int handle_redir_stdin(char **args, linked_list_t **env, int *index,
     redirection_map *red);
 
+int handle_pipe(linked_list_t **env, redirection_map *red);
 #endif

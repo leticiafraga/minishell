@@ -11,7 +11,7 @@ Test(handle_pipe_test, basic_test, .init=cr_redirect_stdout)
     linked_list_t *env = create_env();
     redirection_map_semic *s = sep_semicolon("ls | grep run_prog.c");
 
-    int res = run_all(&env, s);
+    int res = it_semicolons(&env, s);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\n");
@@ -24,7 +24,7 @@ Test(handle_pipe_test, multiple_pipe, .init=cr_redirect_stdout)
     linked_list_t *env = create_env();
     redirection_map_semic *s = sep_semicolon("ls | grep run_prog.c | wc -l");
 
-    int res = run_all(&env, s);
+    int res = it_semicolons(&env, s);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("1\n");

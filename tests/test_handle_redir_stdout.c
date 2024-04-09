@@ -11,7 +11,7 @@ Test(handle_redir_stdout_test, basic_test, .init=cr_redirect_stdout)
     linked_list_t *env = create_env();
     redirection_map_semic *s = sep_semicolon("ls run_prog.c > lsresult; cat lsresult");
 
-    int res = run_all(&env, s);
+    int res = it_semicolons(&env, s);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\n");
@@ -25,7 +25,7 @@ Test(handle_redir_stdout_append_test, basic_test, .init=cr_redirect_stdout)
     redirection_map_semic *s = sep_semicolon(
         "rm lsresultappend; ls run_prog.c >> lsresultappend; ls run_prog.c >> lsresultappend; cat lsresultappend");
 
-    int res = run_all(&env, s);
+    int res = it_semicolons(&env, s);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\nrun_prog.c\n");

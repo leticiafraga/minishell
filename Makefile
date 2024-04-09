@@ -28,6 +28,7 @@ SRC_FN	=	run_prog.c \
 			redirections/handle_redir_stdout_append.c \
 			redirections/handle_redir_stdin.c \
 			find_seps.c \
+			find_seps_red.c \
 			sep_semicolon.c
 
 SRC     =	main.c	\
@@ -86,5 +87,8 @@ fclean:	clean
 	rm -f $(NAME) $(TESTS) $(MY_SEGFAULT) lsresult*
 
 re:     fclean all
+
+tester:		$(NAME)
+	cd tester && cp ../mysh . && ./tester.sh
 
 .PHONY: lib $(NAME) $(MY_SEGFAULT)

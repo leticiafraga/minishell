@@ -11,7 +11,7 @@ Test(handle_semicolon_test, basic_test, .init=cr_redirect_stdout)
     linked_list_t *env = create_env();
     redirection_map_semic *s = sep_semicolon("ls run_prog.c;cat tests/cattest");
 
-    int res = run_all(&env, s);
+    int res = it_semicolons(&env, s);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\nhola\n");
@@ -24,7 +24,7 @@ Test(handle_semicolon_test, more_complex_test, .init=cr_redirect_stdout)
     linked_list_t *env = create_env();
     redirection_map_semic *s = sep_semicolon("ls run_prog.c; cat tests/cattest | wc -w");
 
-    int res = run_all(&env, s);
+    int res = it_semicolons(&env, s);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\n1\n");

@@ -59,20 +59,6 @@ static void free_vars(char **args, char **arr, char **paths)
     free_ptr_arr(paths);
 }
 
-int handle_fork(char **args, char **arr, char **paths,
-    linked_list_t *env)
-{
-    pid_t child;
-    int status = 0;
-
-    child = fork();
-    if (child == 0) {
-        handle_exec(args, arr, paths, env);
-    } else
-        waitpid(child, &status, 0);
-    return status;
-}
-
 int run_prog(char *argv, linked_list_t **env)
 {
     char **args = my_str_to_word_array(argv);
@@ -82,12 +68,12 @@ int run_prog(char *argv, linked_list_t **env)
 
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {
-            status = handle_status(handle_fork(args, arr, paths, *env));
+            handle_exec(args, arr, paths, *env);
             break;
         }
         if (my_strcmp(args[0], commands[i]) == 0) {
-            status = ((commands_fn[i])(args, env));
-            break;
+            status = (commands_fn[i])(args, env);
+            exit(status);
         }
     }
     free_vars(args, arr, paths);

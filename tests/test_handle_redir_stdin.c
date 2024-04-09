@@ -11,7 +11,7 @@ Test(handle_redir_stdin_test, basic_test, .init=cr_redirect_stdout)
     linked_list_t *env = create_env();
     redirection_map_semic *s = sep_semicolon("cat < tests/cattest");
 
-    int res = run_all(&env, s);
+    int res = it_semicolons(&env, s);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("hola\n");

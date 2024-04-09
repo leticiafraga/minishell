@@ -54,7 +54,7 @@ static int it_line(redirection_map *red, int len, char *line)
     }
 }
 
-static redirection_map *find_seps_pipe(char *line)
+redirection_map *find_seps(char *line)
 {
     int len = my_strlen(line);
     redirection_map *red = malloc(sizeof(redirection_map));
@@ -84,20 +84,18 @@ static int get_cmds_text(redirection_map *r, char *line)
     free(cmd);
 }
 
-redirection_map **get_pipes(redirection_map_semic *semic)
+redirection_map *get_cmds(char *semic)
 {
-    redirection_map **r = malloc(sizeof(redirection_map*) * (semic->cnt + 1));
+    redirection_map *r = malloc(sizeof(redirection_map));
     char *cmd = malloc(sizeof(char) * 100);
     int len;
     int cur = 0;
     char *cur_pos;
     char *line;
 
-    for (int j = 0; j < semic->cnt; j++) {
-        line = semic->arr[j];
-        r[j] = find_seps_pipe(line);
-        get_cmds_text(r[j], line);
-    }
+    line = semic;
+    r = find_seps(line);
+    get_cmds_text(r, line);
     free(cmd);
     return r;
 }
