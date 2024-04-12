@@ -29,15 +29,15 @@ static int cnt_cmds(char *line)
     return cnt;
 }
 
-static int add_to_map(redirection_opts *new, redirection_map *red)
+static int add_to_map(redirection_opts_t *new, redirection_list_t *red)
 {
     red->arr[red->cnt] = new;
     red->cnt ++;
 }
 
-static int create_sep(sep s, int i, redirection_map *red)
+static int create_sep(sep_t s, int i, redirection_list_t *red)
 {
-    redirection_opts *new = malloc(sizeof(redirection_opts));
+    redirection_opts_t *new = malloc(sizeof(redirection_opts_t));
 
     new->symbol = s;
     new->next_cmd_index = i + 1;
@@ -45,7 +45,7 @@ static int create_sep(sep s, int i, redirection_map *red)
     add_to_map(new, red);
 }
 
-static int it_line(redirection_map *red, int len, char *line)
+static int it_line(redirection_list_t *red, int len, char *line)
 {
     for (int i = 0; i < len; i++) {
         if (line[i] == '|') {
@@ -54,20 +54,20 @@ static int it_line(redirection_map *red, int len, char *line)
     }
 }
 
-static redirection_map *find_seps_pipe(char *line)
+static redirection_list_t *find_seps_pipe(char *line)
 {
     int len = my_strlen(line);
-    redirection_map *red = malloc(sizeof(redirection_map));
+    redirection_list_t *red = malloc(sizeof(redirection_list_t));
     int cnt = cnt_cmds(line);
 
     red->cnt = 0;
-    red->arr = malloc(sizeof(redirection_opts *) * (cnt + 1));
+    red->arr = malloc(sizeof(redirection_opts_t *) * (cnt + 1));
     it_line(red, len, line);
     create_sep(end, len, red);
     return red;
 }
 
-static int get_cmds_text(redirection_map *r, char *line)
+static int get_cmds_text(redirection_list_t *r, char *line)
 {
     int cur = 0;
     char *cur_pos = line;
@@ -84,9 +84,10 @@ static int get_cmds_text(redirection_map *r, char *line)
     free(cmd);
 }
 
-redirection_map **get_pipes(redirection_map_semic *semic)
+redirection_list_t **get_pipes(redirection_map_semic_t *semic)
 {
-    redirection_map **r = malloc(sizeof(redirection_map*) * (semic->cnt + 1));
+    redirection_list_t **r = 
+        malloc(sizeof(redirection_list_t *) * (semic->cnt + 1));
     char *cmd = malloc(sizeof(char) * 100);
     int len;
     int cur = 0;

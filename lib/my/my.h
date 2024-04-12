@@ -47,6 +47,6 @@ char *my_strupcase(char *str);
 void my_swap(int *a, int *b);
 int my_show_word_array(char *const *tab);
 char **my_str_to_word_array(char const *str);
-char **my_str_to_word_array_sep(char const *str, char sep);
+char **my_str_to_word_array_sep(char const *str, char sep_t);
 
 #endif

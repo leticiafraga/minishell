@@ -8,9 +8,9 @@
 #ifndef ENV_ITEM_H
     #define ENV_ITEM_H
 
-typedef struct env_item {
+typedef struct env_item_h {
     char *key;
     char *value;
-} env_item;
+} env_item_h;
 
 #endif

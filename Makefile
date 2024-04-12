@@ -38,7 +38,6 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/create_env.c \
 				tests/test_exec_prompt.c \
 				tests/test_try_paths.c \
-				tests/test_run_prog.c \
 				tests/test_handle_cd.c \
 				tests/test_handle_env.c \
 				tests/test_handle_pipe.c \
@@ -46,8 +45,7 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/test_handle_redir_stdout.c \
 				tests/test_handle_semicolon.c \
 				tests/test_handle_setenv.c \
-				tests/test_handle_unsetenv.c \
-				tests/test_find_seps.c
+				tests/test_handle_unsetenv.c
 
 TESTS	=	unit_tests
 

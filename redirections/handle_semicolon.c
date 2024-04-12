@@ -13,7 +13,7 @@
 #include "../include/linked_list.h"
 
 int handle_semicolon(char **args, linked_list_t **env,
-    int *index, redirection_map *red)
+    int *index, redirection_list_t *red)
 {
     return run_prog(args[*index], env);
 }

@@ -264,3 +264,13 @@ CLEAN=""
 TESTS=
   echo "ls .. | cat | grep main"
 [103-END]
+
+[104]
+NAME="redirection"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls > aa"
+  echo "cat aa"
+  echo "rm aa"
+[104-END]

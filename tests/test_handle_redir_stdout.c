@@ -9,7 +9,7 @@
 Test(handle_redir_stdout_test, basic_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic *s = sep_semicolon("ls run_prog.c > lsresult; cat lsresult");
+    redirection_map_semic_t *s = sep_semicolon("ls run_prog.c > lsresult; cat lsresult");
 
     int res = it_semicolons(&env, s);
 
@@ -22,7 +22,7 @@ Test(handle_redir_stdout_test, basic_test, .init=cr_redirect_stdout)
 Test(handle_redir_stdout_append_test, basic_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic *s = sep_semicolon(
+    redirection_map_semic_t *s = sep_semicolon(
         "rm lsresultappend; ls run_prog.c >> lsresultappend; ls run_prog.c >> lsresultappend; cat lsresultappend");
 
     int res = it_semicolons(&env, s);

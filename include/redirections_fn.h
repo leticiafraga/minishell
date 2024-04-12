@@ -10,7 +10,7 @@
     #include "redirection.h"
 
 int (*redirections_fn[]) (char **args, linked_list_t **env,
-    int *index, redirection_map *red) = {
+    int *index, redirection_list_t *red) = {
     &handle_redir_stdin,
     &handle_semicolon,
     &handle_redir_stdout,

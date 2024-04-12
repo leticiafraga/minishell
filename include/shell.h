@@ -19,7 +19,7 @@ typedef struct cmd_state {
 
 int exec_prompt(int argc, char **argv, char **env);
 int run_prog(char *argv, linked_list_t **env);
-int it_semicolons(linked_list_t **env, redirection_map_semic *s);
+int it_semicolons(linked_list_t **env, redirection_map_semic_t *s);
 char *my_getenv(linked_list_t *env, char *var);
 int try_paths(char **args, char **env, char **paths);
 linked_list_t *getenv_list(char **arr);
@@ -33,7 +33,7 @@ void handle_exec(char **args, char **env, char **paths,
 int handle_unsetenv(char **args, linked_list_t **env);
 
 void push_to_list(linked_list_t **begin, void *data);
-void push_unique_to_list(linked_list_t **begin, env_item *data);
+void push_unique_to_list(linked_list_t **begin, env_item_h *data);
 void *delete_in_list(linked_list_t **begin,
     void const *ref, int (*cmp_fct) ());
 int add_item(char *key, char *value, linked_list_t **env);
@@ -41,6 +41,8 @@ int add_item(char *key, char *value, linked_list_t **env);
 void free_env(linked_list_t *list);
 void free_ptr_arr(char **args);
 void free_ptr_arr_content(char **args);
+void free_vars(char **args, char **arr, char **paths);
+void free_cmd_state(cmd_state *state);
 char *clear_filename(char *prev);
 
 void put_arg_err(char *arg, char *err);

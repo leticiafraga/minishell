@@ -52,13 +52,6 @@ static int handle_error(char *arg)
     return 1;
 }
 
-static void free_vars(char **args, char **arr, char **paths)
-{
-    free_ptr_arr(args);
-    free_ptr_arr(arr);
-    free_ptr_arr(paths);
-}
-
 void handle_exec(char **args, char **env, char **paths,
     linked_list_t *listenv)
 {

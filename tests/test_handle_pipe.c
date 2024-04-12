@@ -6,10 +6,10 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
-Test(handle_pipe_test, basic_test, .init=cr_redirect_stdout)
+Test(it_pipes_test, basic_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic *s = sep_semicolon("ls | grep run_prog.c");
+    redirection_map_semic_t *s = sep_semicolon("ls | grep run_prog.c");
 
     int res = it_semicolons(&env, s);
 
@@ -19,10 +19,10 @@ Test(handle_pipe_test, basic_test, .init=cr_redirect_stdout)
     free_semic(s);
 }
 
-Test(handle_pipe_test, multiple_pipe, .init=cr_redirect_stdout)
+Test(it_pipes_test, multiple_pipe, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic *s = sep_semicolon("ls | grep run_prog.c | wc -l");
+    redirection_map_semic_t *s = sep_semicolon("ls | grep run_prog.c | wc -l");
 
     int res = it_semicolons(&env, s);
 

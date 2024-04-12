@@ -52,13 +52,6 @@ int handle_status(int status)
     return 84;
 }
 
-static void free_vars(char **args, char **arr, char **paths)
-{
-    free_ptr_arr(args);
-    free_ptr_arr(arr);
-    free_ptr_arr(paths);
-}
-
 int run_prog(char *argv, linked_list_t **env)
 {
     char **args = my_str_to_word_array(argv);

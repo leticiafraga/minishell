@@ -12,10 +12,10 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
-env_item *getenv_item(char *value)
+env_item_h *getenv_item(char *value)
 {
-    env_item *item = malloc(sizeof(env_item));
-    int sep = 0;
+    env_item_h *item = malloc(sizeof(env_item_h));
+    int sep_t = 0;
     char *tok = strtok(value, "=");
 
     item->key = my_strdup(tok);
@@ -32,7 +32,7 @@ env_item *getenv_item(char *value)
 linked_list_t *getenv_list(char **arr)
 {
     linked_list_t *env = 0;
-    env_item *item;
+    env_item_h *item;
     int i = 0;
 
     while (arr[i] != 0) {
@@ -54,7 +54,7 @@ static int cnt_list(linked_list_t *list)
     return cnt;
 }
 
-static char *get_dest(env_item *item)
+static char *get_dest(env_item_h *item)
 {
     int len1;
     int len2;

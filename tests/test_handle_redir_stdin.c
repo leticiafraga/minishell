@@ -9,7 +9,7 @@
 Test(handle_redir_stdin_test, basic_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic *s = sep_semicolon("cat < tests/cattest");
+    redirection_map_semic_t *s = sep_semicolon("cat < tests/cattest");
 
     int res = it_semicolons(&env, s);
 

@@ -23,7 +23,7 @@ static int cnt_semicolons(char *line)
     return cnt;
 }
 
-int it_line_semicolon(redirection_map_semic *red, char *line)
+int it_line_semicolon(redirection_map_semic_t *red, char *line)
 {
     char *newline = my_strdup(line);
     char *token = strtok(newline, ";");
@@ -38,10 +38,10 @@ int it_line_semicolon(redirection_map_semic *red, char *line)
     free(newline);
 }
 
-redirection_map_semic *sep_semicolon(char *line)
+redirection_map_semic_t *sep_semicolon(char *line)
 {
     int len = my_strlen(line);
-    redirection_map_semic *red = malloc(sizeof(redirection_map_semic));
+    redirection_map_semic_t *red = malloc(sizeof(redirection_map_semic_t));
     int cnt = cnt_semicolons(line);
 
     red->cnt = 0;

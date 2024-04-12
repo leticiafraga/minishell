@@ -14,7 +14,7 @@
 #include "../include/linked_list.h"
 
 int handle_redir_stdout(char **args, linked_list_t **env, int *index,
-    redirection_map *red)
+    redirection_list_t *red)
 {
     char *filename = clear_filename(args[*index + 1]);
     int fd = open(filename, O_WRONLY | O_CREAT, 0644);
