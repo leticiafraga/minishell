@@ -53,7 +53,6 @@ int prompt(size_t bufsize, char *line, global_state_t *state)
     while (1) {
         handle_tty(state);
         characters = getline(&line, &bufsize, stdin);
-        dprintf(2, "line %d %s\n", characters, line);
         if (characters == -1)
             break;
         if (line[0] == '\n')

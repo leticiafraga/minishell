@@ -284,3 +284,13 @@ TESTS=
   echo "cat <aa | wc"
   echo "rm aa"
 [105-END]
+
+[106]
+NAME="redirection stdout"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls > out; echo test >> out"
+  echo "cat out"
+  echo "rm out"
+[106-END]

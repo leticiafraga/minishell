@@ -13,10 +13,10 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
-int handle_redir_stdout_append(char **args,
-    linked_list_t **env, int *index, redirection_list_t *red)
+int handle_redir_stdout_append(
+    char *args, global_state_t *state)
 {
-    char *filename = clear_filename(args[*index + 1]);
+    char *filename = clear_filename(args);
     int fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0644);
     int dupout = dup(1);
     int status;
@@ -24,10 +24,9 @@ int handle_redir_stdout_append(char **args,
     close(1);
     dup(fd);
     close(fd);
-    //status = run_prog(args[*index], state);
+    status = run_prog(args, state);
     dup2(dupout, 1);
     close(dupout);
-    (*index) += 1;
     free(filename);
     return status;
 }

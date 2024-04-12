@@ -17,6 +17,13 @@ extern const char *commands[5];
 
 extern int (*commands_fn[]) (char **args, global_state_t *state);
 
+static int handle_out(cmd_opts_t *red, global_state_t *state)
+{
+    if (red->out->symbol == out1)
+        return handle_redir_stdout(red->cmd, state);
+    return handle_redir_stdout_append(red->cmd, state);
+}
+
 static int run_cmds(global_state_t *state)
 {
     int status = 0;
@@ -27,8 +34,7 @@ static int run_cmds(global_state_t *state)
         return handle_redir_stdin(
             red->cmd, state);
     } else if (red->out) {
-        return handle_redir_stdout(
-            red->cmd, state);
+        return handle_out(red, state);
     } else
         return handle_semicolon2(
             red->cmd, state);

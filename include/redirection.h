@@ -67,8 +67,7 @@ int handle_semicolon2(
 int handle_redir_stdout(
     char *args, global_state_t *state);
 int handle_redir_stdout_append(
-    char **args, linked_list_t **env,
-    int *index, redirection_list_t *red);
+    char *args, global_state_t *state);
 int handle_redir_stdin(
     char *args, global_state_t *state);
 
