@@ -118,28 +118,19 @@ static int it_line(cmd_opts_t *red, int len, char *line)
             break;
         }
     }
-    cmds_line = malloc(sizeof(char *) * (end_cmd));
+    cmds_line = malloc(sizeof(char *) * (end_cmd + 1));
     my_strncpy(cmds_line, line, end_cmd);
     red->cmd = cmds_line;
     it_seps(end_cmd, len, red, line);
 }
 
-static cmd_opts_t *find_seps(char *line)
+cmd_opts_t *get_cmds(char *line)
 {
     int len = my_strlen(line);
     cmd_opts_t *red = malloc(sizeof(redirection_list_t));
 
+    red->in = 0;
+    red->out = 0;
     it_line(red, len, line);
     return red;
-}
-
-cmd_opts_t *get_cmds(char *line)
-{
-    cmd_opts_t *r = malloc(sizeof(cmd_opts_t));
-    int len;
-    int cur = 0;
-    char *cur_pos;
-
-    r = find_seps(line);
-    return r;
 }

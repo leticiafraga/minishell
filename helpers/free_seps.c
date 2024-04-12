@@ -19,7 +19,7 @@ int free_seps(redirection_list_t *r)
     free(r);
 }
 
-int free_semic(cmds_arr_t *r)
+int free_cmds_arr(cmds_arr_t *r)
 {
     for (int i = 0; i < r->cnt; i++) {
         free(r->arr[i]);

@@ -36,9 +36,10 @@ int it_semicolons(linked_list_t **env, char *line)
     for (int i = 0; i < s->cnt; i++) {
         state.cmd = r[i];
         status = it_pipes(&state);
+        free_cmds_arr(r[i]);
     }
     free(r);
-    free_semic(s);
+    free_cmds_arr(s);
     return status;
 }
 

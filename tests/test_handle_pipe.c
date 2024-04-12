@@ -16,7 +16,7 @@ Test(it_pipes_test, basic_test, .init=cr_redirect_stdout)
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\n");
     free(env);
-    free_semic(s);
+    free_cmds_arr(s);
 }
 
 Test(it_pipes_test, multiple_pipe, .init=cr_redirect_stdout)
@@ -29,5 +29,5 @@ Test(it_pipes_test, multiple_pipe, .init=cr_redirect_stdout)
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("1\n");
     free(env);
-    free_semic(s);
+    free_cmds_arr(s);
 }

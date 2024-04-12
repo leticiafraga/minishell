@@ -58,7 +58,7 @@ cmd_opts_t *get_cmds(char *semic);
 cmds_arr_t **sep_pipes(cmds_arr_t *semic);
 
 int free_seps(redirection_list_t *r);
-int free_semic(cmds_arr_t *r);
+int free_cmds_arr(cmds_arr_t *r);
 void free_ptr_arr_content(char **args);
 
 int handle_semicolon(char **args, linked_list_t **env, int *index,

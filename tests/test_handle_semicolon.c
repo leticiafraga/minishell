@@ -16,7 +16,7 @@ Test(handle_semicolon_test, basic_test, .init=cr_redirect_stdout)
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\nhola\n");
     free(env);
-    free_semic(s);
+    free_cmds_arr(s);
 }
 
 Test(handle_semicolon_test, more_complex_test, .init=cr_redirect_stdout)
@@ -29,5 +29,5 @@ Test(handle_semicolon_test, more_complex_test, .init=cr_redirect_stdout)
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\n1\n");
     free(env);
-    free_semic(s);
+    free_cmds_arr(s);
 }
