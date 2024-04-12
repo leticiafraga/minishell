@@ -9,7 +9,7 @@
 Test(handle_semicolon_test, basic_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic_t *s = sep_semicolon("ls run_prog.c;cat tests/cattest");
+    cmds_arr_t *s = sep_semicolon("ls run_prog.c;cat tests/cattest");
 
     int res = it_semicolons(&env, s);
 
@@ -22,7 +22,7 @@ Test(handle_semicolon_test, basic_test, .init=cr_redirect_stdout)
 Test(handle_semicolon_test, more_complex_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic_t *s = sep_semicolon("ls run_prog.c; cat tests/cattest | wc -w");
+    cmds_arr_t *s = sep_semicolon("ls run_prog.c; cat tests/cattest | wc -w");
 
     int res = it_semicolons(&env, s);
 

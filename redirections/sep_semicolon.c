@@ -5,8 +5,8 @@
 ** Minishell 2
 */
 
-#include "include/shell.h"
-#include "include/my.h"
+#include "../include/shell.h"
+#include "../include/my.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -23,7 +23,7 @@ static int cnt_semicolons(char *line)
     return cnt;
 }
 
-int it_line_semicolon(redirection_map_semic_t *red, char *line)
+int it_line_semicolon(cmds_arr_t *red, char *line)
 {
     char *newline = my_strdup(line);
     char *token = strtok(newline, ";");
@@ -38,10 +38,10 @@ int it_line_semicolon(redirection_map_semic_t *red, char *line)
     free(newline);
 }
 
-redirection_map_semic_t *sep_semicolon(char *line)
+cmds_arr_t *sep_semicolon(char *line)
 {
     int len = my_strlen(line);
-    redirection_map_semic_t *red = malloc(sizeof(redirection_map_semic_t));
+    cmds_arr_t *red = malloc(sizeof(cmds_arr_t));
     int cnt = cnt_semicolons(line);
 
     red->cnt = 0;

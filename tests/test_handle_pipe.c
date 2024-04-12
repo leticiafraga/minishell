@@ -9,7 +9,7 @@
 Test(it_pipes_test, basic_test, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic_t *s = sep_semicolon("ls | grep run_prog.c");
+    cmds_arr_t *s = sep_semicolon("ls | grep run_prog.c");
 
     int res = it_semicolons(&env, s);
 
@@ -22,7 +22,7 @@ Test(it_pipes_test, basic_test, .init=cr_redirect_stdout)
 Test(it_pipes_test, multiple_pipe, .init=cr_redirect_stdout)
 {
     linked_list_t *env = create_env();
-    redirection_map_semic_t *s = sep_semicolon("ls | grep run_prog.c | wc -l");
+    cmds_arr_t *s = sep_semicolon("ls | grep run_prog.c | wc -l");
 
     int res = it_semicolons(&env, s);
 

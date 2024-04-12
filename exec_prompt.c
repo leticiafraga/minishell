@@ -24,9 +24,9 @@ static void handle_tty(void)
         my_putstr("$> ");
 }
 
-int it_semicolons(linked_list_t **env, redirection_map_semic_t *s)
+int it_semicolons(linked_list_t **env, cmds_arr_t *s)
 {
-    redirection_list_t **r;
+    cmds_arr_t **r;
     int status = 0;
     global_state_t state;
 
@@ -35,7 +35,6 @@ int it_semicolons(linked_list_t **env, redirection_map_semic_t *s)
     for (int i = 0; i < s->cnt; i++) {
         state.red = r[i];
         status = it_pipes(&state);
-        free_seps(state.red);
     }
     free(r);
     return status;
@@ -45,7 +44,7 @@ int prompt(size_t bufsize, char *line, linked_list_t **env)
 {
     int status = 0;
     size_t characters;
-    redirection_map_semic_t *s;
+    cmds_arr_t *s;
 
     while (1) {
         handle_tty();

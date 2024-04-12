@@ -19,7 +19,7 @@ typedef struct cmd_state_t {
 
 int exec_prompt(int argc, char **argv, char **env);
 int run_prog(char *argv, linked_list_t **env);
-int it_semicolons(linked_list_t **env, redirection_map_semic_t *s);
+int it_semicolons(linked_list_t **env, cmds_arr_t *s);
 char *my_getenv(linked_list_t *env, char *var);
 int try_paths(char **args, char **env, char **paths);
 linked_list_t *getenv_list(char **arr);

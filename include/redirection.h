@@ -44,21 +44,21 @@ typedef struct {
 typedef struct {
     char **arr;
     int cnt;
-} redirection_map_semic_t;
+} cmds_arr_t;
 
 typedef struct global_state_t {
     linked_list_t **env;
     int global_pipe[2];
-    redirection_list_t *red;
+    cmds_arr_t *red;
     redirection_list2_t *red_inner;
 } global_state_t;
 
-redirection_map_semic_t *sep_semicolon(char *line);
+cmds_arr_t *sep_semicolon(char *line);
 redirection_list2_t *get_cmds(char *semic);
-redirection_list_t **get_pipes(redirection_map_semic_t *semic);
+cmds_arr_t **get_pipes(cmds_arr_t *semic);
 
 int free_seps(redirection_list_t *r);
-int free_semic(redirection_map_semic_t *r);
+int free_semic(cmds_arr_t *r);
 void free_ptr_arr_content(char **args);
 
 int handle_semicolon(char **args, linked_list_t **env, int *index,

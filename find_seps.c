@@ -8,16 +8,10 @@
 #include "include/shell.h"
 #include "include/my.h"
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
-static int one_or_two_char(char *line, int i, char searched)
-{
-    if (line[i + 1] == searched)
-        return 1;
-    else
-        return 0;
-}
-
-static int cnt_cmds(char *line)
+static int cnt_pipes(char *line)
 {
     int len = my_strlen(line);
     int cnt = 0;
@@ -29,76 +23,36 @@ static int cnt_cmds(char *line)
     return cnt;
 }
 
-static int add_to_map(redirection_opts_t *new, redirection_list_t *red)
+int it_line_pipe(cmds_arr_t *red, char *line)
 {
-    red->arr[red->cnt] = new;
-    red->cnt ++;
-}
+    char *newline = my_strdup(line);
+    char *token = strtok(newline, "|");
+    char *new;
 
-static int create_sep(sep_t s, int i, redirection_list_t *red)
-{
-    redirection_opts_t *new = malloc(sizeof(redirection_opts_t));
-
-    new->symbol = s;
-    new->next_cmd_index = i + 1;
-    new->prev_cmd_end = i - 1;
-    add_to_map(new, red);
-}
-
-static int it_line(redirection_list_t *red, int len, char *line)
-{
-    for (int i = 0; i < len; i++) {
-        if (line[i] == '|') {
-            create_sep(pipe_symbol, i, red);
-        }
+    while (token != NULL) {
+        new = my_strdup(token);
+        red->arr[red->cnt] = new;
+        red->cnt ++;
+        token = strtok(NULL, "|");
     }
+    free(newline);
 }
 
-static redirection_list_t *find_seps_pipe(char *line)
+cmds_arr_t **get_pipes(cmds_arr_t *semic)
 {
-    int len = my_strlen(line);
-    redirection_list_t *red = malloc(sizeof(redirection_list_t));
-    int cnt = cnt_cmds(line);
-
-    red->cnt = 0;
-    red->arr = malloc(sizeof(redirection_opts_t *) * (cnt + 1));
-    it_line(red, len, line);
-    create_sep(end, len, red);
-    return red;
-}
-
-static int get_cmds_text(redirection_list_t *r, char *line)
-{
-    int cur = 0;
-    char *cur_pos = line;
-    char *cmd = malloc(sizeof(char) * 500);
     int len;
+    cmds_arr_t *red;
+    cmds_arr_t **pipes_list = malloc(sizeof(cmds_arr_t *));
+    int cnt;
 
-    for (int i = 0; i < r->cnt; i++) {
-        len = r->arr[i]->prev_cmd_end - cur + 1;
-        cmd = my_strncpy(cmd, cur_pos, len);
-        r->arr[i]->cmd = my_strdup(cmd);
-        cur = r->arr[i]->next_cmd_index;
-        cur_pos = line + cur;
+    for (int i = 0; i < semic->cnt; i++) {
+        red = malloc(sizeof(cmds_arr_t));
+        len = my_strlen(semic->arr[i]);
+        cnt = cnt_pipes(semic->arr[i]);
+        red->cnt = 0;
+        red->arr = malloc(sizeof(char *) * (cnt + 1));
+        it_line_pipe(red, semic->arr[i]);
+        pipes_list[i] = red;
     }
-    free(cmd);
-}
-
-redirection_list_t **get_pipes(redirection_map_semic_t *semic)
-{
-    redirection_list_t **r =
-        malloc(sizeof(redirection_list_t *) * (semic->cnt + 1));
-    char *cmd = malloc(sizeof(char) * 100);
-    int len;
-    int cur = 0;
-    char *cur_pos;
-    char *line;
-
-    for (int j = 0; j < semic->cnt; j++) {
-        line = semic->arr[j];
-        r[j] = find_seps_pipe(line);
-        get_cmds_text(r[j], line);
-    }
-    free(cmd);
-    return r;
+    return pipes_list;
 }

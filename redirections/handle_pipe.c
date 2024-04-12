@@ -130,7 +130,7 @@ static int restore_copies(int copies[2])
 static int pipe_inner(global_state_t *state)
 {
     linked_list_t **env = state->env;
-    redirection_list_t *red = state->red;
+    cmds_arr_t *red = state->red;
     int p_read = 0;
     int status;
     int i = 0;
@@ -138,13 +138,13 @@ static int pipe_inner(global_state_t *state)
     for (i = 0; i < red->cnt - 1; i++) {
         if (pipe(state->global_pipe))
             return 84;
-        handle_fork(p_read, state->global_pipe[1], red->arr[i]->cmd, state);
+        handle_fork(p_read, state->global_pipe[1], red->arr[i], state);
         p_read = state->global_pipe[0];
         if (p_read != 0) {
             dup2(p_read, 0);
         }
     }
-    handle_last(red->arr[i]->cmd, state, &status);
+    handle_last(red->arr[i], state, &status);
     return handle_status(status);
 }
 
