@@ -75,7 +75,7 @@ int run_prog(char *argv, linked_list_t **env)
         }
         if (my_strcmp(state->cmdargs[0], commands[i]) == 0) {
             status = (commands_fn[i])(state->cmdargs, env);
-            exit(status);
+            break;
         }
     }
     free_cmd_state(state);

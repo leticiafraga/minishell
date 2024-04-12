@@ -36,12 +36,14 @@ static int run_cmds(global_state_t *state)
     cmd_opts_t *red = state->red_inner;
 
     if (red->in) {
-        handle_redir_stdin(red->cmd, state->env, state->red_inner);
+        return handle_redir_stdin(
+            red->cmd, state->env, state->red_inner);
     } else if (red->out) {
-        handle_redir_stdout(red->cmd, state->env, state->red_inner);
+        return handle_redir_stdout(
+            red->cmd, state->env, state->red_inner);
     } else
-        handle_semicolon2(red->cmd, state->env, state->red_inner);
-    return status;
+        return handle_semicolon2(
+            red->cmd, state->env, state->red_inner);
 }
 
 static int handle_exec_inner(char *args, global_state_t *g_state)
@@ -67,7 +69,8 @@ static int handle_fork(int p_read, int p_write,
         }
         dup2(p_write, 1);
         close(p_write);
-        handle_exec_inner(args, g_state);
+        status = handle_exec_inner(args, g_state);
+        exit(status);
     } else {
         close(p_read);
         close(p_write);
@@ -96,12 +99,12 @@ static int handle_last(char *args, global_state_t *g_state)
 
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {
-            status = 
+            status =
                 handle_fork_2(args, g_state);
             break;
         }
         if (my_strcmp(cmdargs[0], commands[i]) == 0) {
-            status = (commands_fn[i])(cmdargs, g_state->env);
+            status = handle_exec_inner(args, g_state);
             break;
         }
     }
