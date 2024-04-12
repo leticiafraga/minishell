@@ -24,7 +24,7 @@ int handle_redir_stdout_append(char **args,
     close(1);
     dup(fd);
     close(fd);
-    status = run_prog(args[*index], env);
+    //status = run_prog(args[*index], state);
     dup2(dupout, 1);
     close(dupout);
     (*index) += 1;

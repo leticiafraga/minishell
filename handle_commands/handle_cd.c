@@ -72,7 +72,7 @@ static void handle_error(char *arg)
     }
 }
 
-int handle_cd(char **args, linked_list_t **env)
+int handle_cd(char **args, global_state_t *state)
 {
     char *path = args[1];
     char cur[200];
@@ -83,13 +83,13 @@ int handle_cd(char **args, linked_list_t **env)
         return 1;
     }
     getcwd(cur, 200);
-    status = exec_cd(path, env);
+    status = exec_cd(path, state->env);
     if (status != 0) {
         handle_error(path);
         return 1;
     }
-    add_item("OLDPWD", cur, env);
+    add_item("OLDPWD", cur, state->env);
     getcwd(cur, 200);
-    add_item("PWD", cur, env);
+    add_item("PWD", cur, state->env);
     return status;
 }

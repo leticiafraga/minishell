@@ -21,7 +21,7 @@ static int handle_env_inner(char **args, linked_list_t *env)
     return 0;
 }
 
-int handle_env(char **args, linked_list_t **env)
+int handle_env(char **args, global_state_t *state)
 {
-    return handle_env_inner(args, *env);
+    return handle_env_inner(args, *(state->env));
 }

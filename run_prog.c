@@ -63,10 +63,10 @@ int handle_status(int status)
     return 84;
 }
 
-int run_prog(char *argv, linked_list_t **env)
+int run_prog(char *argv, global_state_t *g_state)
 {
     int status;
-    cmd_state_t *state = getcmd_state(argv, env);
+    cmd_state_t *state = getcmd_state(argv, g_state->env);
 
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {
@@ -74,7 +74,7 @@ int run_prog(char *argv, linked_list_t **env)
             break;
         }
         if (my_strcmp(state->cmdargs[0], commands[i]) == 0) {
-            status = (commands_fn[i])(state->cmdargs, env);
+            status = (commands_fn[i])(state->cmdargs, g_state);
             break;
         }
     }

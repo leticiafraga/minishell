@@ -18,24 +18,26 @@ int is_exit(char *line)
         || my_strcmp(line, "exit") == 0;
 }
 
-static void handle_tty(void)
+static void handle_tty(global_state_t *state)
 {
-    if (isatty(0))
-        my_putstr("$> ");
+    if (isatty(0)) {
+        my_putstr("$");
+        if (state->pwd)
+            my_putstr(state->pwd);
+        my_putstr("> ");
+    }
 }
 
-int it_semicolons(linked_list_t **env, char *line)
+int it_semicolons(global_state_t *state, char *line)
 {
     cmds_arr_t **r;
     int status = 0;
-    global_state_t state;
     cmds_arr_t *s = sep_semicolon(line);
 
-    state.env = env;
     r = sep_pipes(s);
     for (int i = 0; i < s->cnt; i++) {
-        state.cmd = r[i];
-        status = it_pipes(&state);
+        state->cmd = r[i];
+        status = it_pipes(state);
         free_cmds_arr(r[i]);
     }
     free(r);
@@ -43,14 +45,15 @@ int it_semicolons(linked_list_t **env, char *line)
     return status;
 }
 
-int prompt(size_t bufsize, char *line, linked_list_t **env)
+int prompt(size_t bufsize, char *line, global_state_t *state)
 {
     int status = 0;
     size_t characters;
 
     while (1) {
-        handle_tty();
+        handle_tty(state);
         characters = getline(&line, &bufsize, stdin);
+        dprintf(2, "line %d %s\n", characters, line);
         if (characters == -1)
             break;
         if (line[0] == '\n')
@@ -59,7 +62,7 @@ int prompt(size_t bufsize, char *line, linked_list_t **env)
             status = 0;
             break;
         }
-        status = it_semicolons(env, line);
+        status = it_semicolons(state, line);
     }
     return status;
 }
@@ -71,9 +74,12 @@ int exec_prompt(int argc, char **argv, char **env)
     int status = 84;
     char line[500];
     linked_list_t *listenv = getenv_list(env);
+    global_state_t state;
 
+    state.env = &listenv;
+    state.pwd = my_getenv(listenv, "PWD");
     if (argc == 1) {
-        status = prompt(bufsize, line, &listenv);
+        status = prompt(bufsize, line, &state);
     }
     free_env(listenv);
     return status;

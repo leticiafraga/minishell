@@ -13,21 +13,9 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
-static const char *commands[5] = {
-    "cd",
-    "env",
-    "setenv",
-    "unsetenv",
-    0
-};
+extern const char *commands[5];
 
-static int (*commands_fn[5]) (char **args, linked_list_t **env) = {
-    &handle_cd,
-    &handle_env,
-    &handle_setenv,
-    &handle_unsetenv,
-    0
-};
+extern int (*commands_fn[]) (char **args, global_state_t *state);
 
 static int run_cmds(global_state_t *state)
 {
@@ -37,13 +25,13 @@ static int run_cmds(global_state_t *state)
 
     if (red->in) {
         return handle_redir_stdin(
-            red->cmd, state->env, state->red_inner);
+            red->cmd, state);
     } else if (red->out) {
         return handle_redir_stdout(
-            red->cmd, state->env, state->red_inner);
+            red->cmd, state);
     } else
         return handle_semicolon2(
-            red->cmd, state->env, state->red_inner);
+            red->cmd, state);
 }
 
 static int handle_exec_inner(char *args, global_state_t *g_state)

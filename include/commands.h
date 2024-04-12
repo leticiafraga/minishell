@@ -9,7 +9,7 @@
     #define COMMANDS_H
     #include "shell.h"
 
-const char *commands[] = {
+char *commands[] = {
     "cd",
     "env",
     "setenv",
@@ -17,7 +17,7 @@ const char *commands[] = {
     0
 };
 
-int (*commands_fn[]) (char **args, linked_list_t **env) = {
+int (*commands_fn[]) (char **args, global_state_t *state) = {
     &handle_cd,
     &handle_env,
     &handle_setenv,

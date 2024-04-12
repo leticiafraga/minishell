@@ -51,6 +51,7 @@ typedef struct global_state_t {
     int global_pipe[2];
     cmds_arr_t *cmd;
     cmd_opts_t *red_inner;
+    char *pwd;
 } global_state_t;
 
 cmds_arr_t *sep_semicolon(char *line);
@@ -61,17 +62,15 @@ int free_seps(redirection_list_t *r);
 int free_cmds_arr(cmds_arr_t *r);
 void free_ptr_arr_content(char **args);
 
-int handle_semicolon(char **args, linked_list_t **env, int *index,
-    redirection_list_t *red);
 int handle_semicolon2(
-    char *args, linked_list_t **env, cmd_opts_t *red);
+    char *args, global_state_t *state);
 int handle_redir_stdout(
-    char *args, linked_list_t **env, cmd_opts_t *red);
+    char *args, global_state_t *state);
 int handle_redir_stdout_append(
     char **args, linked_list_t **env,
     int *index, redirection_list_t *red);
 int handle_redir_stdin(
-    char *args, linked_list_t **env, cmd_opts_t *red);
+    char *args, global_state_t *state);
 
 int it_pipes(global_state_t *state);
 #endif
