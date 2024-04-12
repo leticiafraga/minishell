@@ -35,7 +35,7 @@ void free_vars(char **args, char **arr, char **paths)
     free_ptr_arr(paths);
 }
 
-void free_cmd_state(cmd_state *state)
+void free_cmd_state(cmd_state_t *state)
 {
     free_ptr_arr(state->arrenv);
     free_ptr_arr(state->cmdargs);

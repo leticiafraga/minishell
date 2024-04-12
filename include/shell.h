@@ -10,12 +10,12 @@
     #include "linked_list.h"
     #include "redirection.h"
 
-typedef struct cmd_state {
+typedef struct cmd_state_t {
     char **cmdargs;
     char **arrenv;
     char **paths;
     linked_list_t **env;
-} cmd_state;
+} cmd_state_t;
 
 int exec_prompt(int argc, char **argv, char **env);
 int run_prog(char *argv, linked_list_t **env);
@@ -33,7 +33,7 @@ void handle_exec(char **args, char **env, char **paths,
 int handle_unsetenv(char **args, linked_list_t **env);
 
 void push_to_list(linked_list_t **begin, void *data);
-void push_unique_to_list(linked_list_t **begin, env_item_h *data);
+void push_unique_to_list(linked_list_t **begin, env_item_t *data);
 void *delete_in_list(linked_list_t **begin,
     void const *ref, int (*cmp_fct) ());
 int add_item(char *key, char *value, linked_list_t **env);
@@ -42,7 +42,7 @@ void free_env(linked_list_t *list);
 void free_ptr_arr(char **args);
 void free_ptr_arr_content(char **args);
 void free_vars(char **args, char **arr, char **paths);
-void free_cmd_state(cmd_state *state);
+void free_cmd_state(cmd_state_t *state);
 char *clear_filename(char *prev);
 
 void put_arg_err(char *arg, char *err);

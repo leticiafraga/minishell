@@ -86,7 +86,7 @@ static int get_cmds_text(redirection_list_t *r, char *line)
 
 redirection_list_t **get_pipes(redirection_map_semic_t *semic)
 {
-    redirection_list_t **r = 
+    redirection_list_t **r =
         malloc(sizeof(redirection_list_t *) * (semic->cnt + 1));
     char *cmd = malloc(sizeof(char) * 100);
     int len;

@@ -30,6 +30,7 @@ jobs:
                         for i in $line; do infos+=($i) ; done
                         echo "::error file=${infos[0]},line=${infos[1]},title=${infos[2]} coding style error::${infos[3]}"
                     done < $(pwd)/coding-style-reports.log
+                    exit 1
                 fi
     check_program_compilation:
         if: github.repository != 'EpitechPromo2028/B-DOP-200-PAR-2-1-bschocolatine-leticia.fraga'

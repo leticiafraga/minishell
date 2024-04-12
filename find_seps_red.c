@@ -24,79 +24,82 @@ static int one_or_two_char(char *line, int i, char searched)
         return 0;
 }
 
-static int create_sep(sep_t s, int i, redirection_list_t *red)
-{
-    redirection_opts_t *new = malloc(sizeof(redirection_opts_t));
-
-    new->symbol = s;
-    new->next_cmd_index = i + 1;
-    new->prev_cmd_end = i - 1;
-    add_to_map(new, red);
-}
-
-static int cnt_cmds(char *line)
+static int it_until_symbol(int start, redirection_list2_t *red, char *line)
 {
     int len = my_strlen(line);
+
+    for (int i = start; i < len; i++) {
+        switch (line[i]) {
+            case '<':
+                return i;
+            case '>':
+                return i;
+            default:
+                break;
+        }
+    }
+    return len;
+}
+
+static char *my_strdup_part(int start, int end, char *line)
+{
+    int diff = end - start + 1;
+    char *dest = malloc(sizeof(char) * diff);
     int cnt = 0;
 
-    for (int i = 0; i < len; i++) {
-        switch (line[i]) {
-            case '>':
-                cnt ++;
-                i += one_or_two_char(line, i, '>');
-                break;
-            case '<':
-                cnt ++;
-                i += one_or_two_char(line, i, '<');
-                break;
-            default:
-                break;
-        }
+    for (int i = start; i < end; i++) {
+        dest[cnt] = line[i];
+        cnt++;
     }
-    return cnt;
+    dest[cnt] = '\0';
+    return dest;
 }
 
-static int create_in(int i, redirection_list_t *red, char *line)
+static int create_in(int i, redirection_list2_t *red, char *line)
 {
-    redirection_opts_t *new = malloc(sizeof(redirection_opts_t));
+    redirection_opts2_t *new = malloc(sizeof(redirection_opts2_t));
+    int filename_end = 0;
 
+    red->in = new;
     if (one_or_two_char(line, i, '<')) {
         new->symbol = in2;
-        new->next_cmd_index = i + 2;
-        new->prev_cmd_end = i - 1;
-        add_to_map(new, red);
-        return 1;
+        filename_end = it_until_symbol(i + 2, red, line);
+        new->filename = my_strdup_part(i + 2, filename_end, line);
     } else {
-        create_sep(in1, i, red);
-        return 0;
+        new->symbol = in1;
+        filename_end = it_until_symbol(i + 1, red, line);
+        new->filename = my_strdup_part(i + 1, filename_end, line);
     }
+    return filename_end - 1;
 }
 
-static int create_out(int i, redirection_list_t *red, char *line)
+static int create_out(int i, redirection_list2_t *red, char *line)
 {
-    redirection_opts_t *new = malloc(sizeof(redirection_opts_t));
+    redirection_opts2_t *new = malloc(sizeof(redirection_opts2_t));
+    int filename_end = 0;
 
+    red->out = new;
     if (one_or_two_char(line, i, '>')) {
         new->symbol = out2;
-        new->next_cmd_index = i + 2;
-        new->prev_cmd_end = i - 1;
-        add_to_map(new, red);
-        return 1;
+        filename_end = it_until_symbol(i + 2, red, line);
+        new->filename = my_strdup_part(i + 2, filename_end, line);
     } else {
-        create_sep(out1, i, red);
-        return 0;
+        new->symbol = out1;
+        filename_end = it_until_symbol(i + 1, red, line);
+        new->filename = my_strdup_part(i + 1, filename_end, line);
     }
+    return filename_end - 1;
 }
 
-static int it_line(redirection_list_t *red, int len, char *line)
+static int it_seps(int end_cmd, int len, redirection_list2_t *red, char *line)
 {
-    for (int i = 0; i < len; i++) {
+    for (int i = end_cmd; i < len; i++) {
         switch (line[i]) {
             case '<':
-                i += create_in(i, red, line);
+                i = create_in(i, red, line);
                 break;
             case '>':
-                i += create_out(i, red, line);
+                i = create_out(i, red, line);
                 break;
             default:
                 break;
@@ -104,48 +107,39 @@ static int it_line(redirection_list_t *red, int len, char *line)
     }
 }
 
-redirection_list_t *find_seps(char *line)
+static int it_line(redirection_list2_t *red, int len, char *line)
+{
+    int end_cmd = len;
+    char *cmds_line;
+
+    for (int i = 0; i < len; i++) {
+        if (line[i] == '>' || line[i] == '<') {
+            end_cmd = i;
+            break;
+        }
+    }
+    cmds_line = malloc(sizeof(char *) * (end_cmd));
+    my_strncpy(cmds_line, line, end_cmd);
+    red->cmd = cmds_line;
+    it_seps(end_cmd, len, red, line);
+}
+
+static redirection_list2_t *find_seps(char *line)
 {
     int len = my_strlen(line);
-    redirection_list_t *red = malloc(sizeof(redirection_list_t));
-    int cnt = cnt_cmds(line);
+    redirection_list2_t *red = malloc(sizeof(redirection_list_t));
 
-    red->cnt = 0;
-    red->arr = malloc(sizeof(redirection_opts_t *) * (cnt + 1));
     it_line(red, len, line);
-    create_sep(end, len, red);
     return red;
 }
 
-static int get_cmds_text(redirection_list_t *r, char *line)
+redirection_list2_t *get_cmds(char *line)
 {
-    int cur = 0;
-    char *cur_pos = line;
-    char *cmd = malloc(sizeof(char) * 500);
-    int len;
-
-    for (int i = 0; i < r->cnt; i++) {
-        len = r->arr[i]->prev_cmd_end - cur + 1;
-        cmd = my_strncpy(cmd, cur_pos, len);
-        r->arr[i]->cmd = my_strdup(cmd);
-        cur = r->arr[i]->next_cmd_index;
-        cur_pos = line + cur;
-    }
-    free(cmd);
-}
-
-redirection_list_t *get_cmds(char *semic)
-{
-    redirection_list_t *r = malloc(sizeof(redirection_list_t));
-    char *cmd = malloc(sizeof(char) * 100);
+    redirection_list2_t *r = malloc(sizeof(redirection_list2_t));
     int len;
     int cur = 0;
     char *cur_pos;
-    char *line;
 
-    line = semic;
     r = find_seps(line);
-    get_cmds_text(r, line);
-    free(cmd);
     return r;
 }

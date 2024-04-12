@@ -275,12 +275,12 @@ TESTS=
   echo "rm aa"
 [104-END]
 
-[104]
+[105]
 NAME="redirection + pipe"
 SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
 CLEAN=""
 TESTS=
   echo "ls > aa"
-  echo "cat aa | wc"
+  echo "cat <aa | wc"
   echo "rm aa"
-[104-END]
+[105-END]

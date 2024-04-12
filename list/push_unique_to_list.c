@@ -10,7 +10,7 @@
 #include "../include/shell.h"
 #include <stdlib.h>
 
-void push_unique_to_list(linked_list_t **begin, env_item_h *data)
+void push_unique_to_list(linked_list_t **begin, env_item_t *data)
 {
     linked_list_t *cur = *begin;
 

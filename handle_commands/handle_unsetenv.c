@@ -10,7 +10,7 @@
 #include "../include/my.h"
 #include "../include/shell.h"
 
-static int cmp_key(char *key, env_item_h *item)
+static int cmp_key(char *key, env_item_t *item)
 {
     return my_strcmp(key, item->key);
 }
@@ -18,7 +18,7 @@ static int cmp_key(char *key, env_item_h *item)
 int handle_unsetenv(char **args, linked_list_t **env)
 {
     char *key = args[1];
-    env_item_h *deleted;
+    env_item_t *deleted;
 
     if (key == 0) {
         my_put_err("unsetenv: Too few arguments.\n");

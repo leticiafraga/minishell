@@ -13,26 +13,24 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
-int handle_redir_stdin(char **args, linked_list_t **env, int *index,
-    redirection_list_t *red)
+int handle_redir_stdin(
+    char *args, linked_list_t **env, redirection_list2_t *red)
 {
-    char *filename = clear_filename(args[*index + 1]);
+    char *filename = clear_filename(red->in->filename);
     int fd = open(filename, O_RDONLY);
     int dupin = dup(STDIN_FILENO);
     int status;
 
     if (fd < 0) {
         free(filename);
-        (*index) += 1;
         return 1;
     }
     close(STDIN_FILENO);
     dup(fd);
     close(fd);
-    status = run_prog(args[*index], env);
+    status = run_prog(args, env);
     dup2(dupin, STDIN_FILENO);
     close(dupin);
-    (*index) += 1;
     free(filename);
     return status;
 }

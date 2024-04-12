@@ -12,7 +12,6 @@
 #include "../include/my.h"
 #include "../include/shell.h"
 #include "../include/linked_list.h"
-#include "../include/redirections_fn.h"
 
 static const char *commands[5] = {
     "cd",
@@ -30,9 +29,9 @@ static int (*commands_fn[5]) (char **args, linked_list_t **env) = {
     0
 };
 
-cmd_state *getcmd_state(char *args, linked_list_t **env)
+cmd_state_t *getcmd_state(char *args, linked_list_t **env)
 {
-    cmd_state *state = malloc(sizeof(cmd_state));
+    cmd_state_t *state = malloc(sizeof(cmd_state_t));
 
     state->cmdargs = my_str_to_word_array(args);
     state->arrenv = getenv_arr(*env);
@@ -41,34 +40,29 @@ cmd_state *getcmd_state(char *args, linked_list_t **env)
     return state;
 }
 
-static int run_cmds(global_state_t *state, char **cmds)
+static int run_cmds(global_state_t *state)
 {
     int status = 0;
     sep_t symbol;
-    redirection_list_t *red = state->red_inner;
+    redirection_list2_t *red = state->red_inner;
 
-    for (int i = 0; i < red->cnt; i++) {
-        symbol = red->arr[i]->symbol;
-        status = (redirections_fn[symbol])(cmds, state->env, &i, red);
-    }
+    if (red->in) {
+        handle_redir_stdin(red->cmd, state->env, state->red_inner);
+    } else if (red->out) {
+        handle_redir_stdout(red->cmd, state->env, state->red_inner);
+    } else
+        handle_semicolon2(red->cmd, state->env, state->red_inner);
     return status;
 }
 
 static int handle_exec_inner(char *args, global_state_t *g_state)
 {
-    cmd_state *state = getcmd_state(args, g_state->env);
-    redirection_list_t *red = get_cmds(args);
-    char **cmds = malloc(sizeof(char *) * (red->cnt + 1));
+    cmd_state_t *state = getcmd_state(args, g_state->env);
+    redirection_list2_t *red = get_cmds(args);
     int status = 0;
 
     g_state->red_inner = red;
-    for (int i = 0; i < red->cnt; i++) {
-        cmds[i] = my_strdup(red->arr[i]->cmd);
-    }
-    cmds[red->cnt] = 0;
-    status = run_cmds(g_state, cmds);
-    free_seps(red);
-    free_ptr_arr(cmds);
+    status = run_cmds(g_state);
     free_cmd_state(state);
     return status;
 }
@@ -110,7 +104,7 @@ static int handle_fork_2(char *args,
 
 static int handle_last(char *args, global_state_t *g_state, int *status)
 {
-    cmd_state *state = getcmd_state(args, g_state->env);
+    cmd_state_t *state = getcmd_state(args, g_state->env);
 
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {

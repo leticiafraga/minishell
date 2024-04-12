@@ -17,3 +17,9 @@ int handle_semicolon(char **args, linked_list_t **env,
 {
     return run_prog(args[*index], env);
 }
+
+int handle_semicolon2(
+    char *args, linked_list_t **env, redirection_list2_t *red)
+{
+    return run_prog(args, env);
+}

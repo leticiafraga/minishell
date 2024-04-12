@@ -11,7 +11,7 @@
 
 int add_item(char *key, char *value, linked_list_t **env)
 {
-    env_item_h *item = malloc(sizeof(env_item_h));
+    env_item_t *item = malloc(sizeof(env_item_t));
 
     item->key = my_strdup(key);
     if (value == 0) {
