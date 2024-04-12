@@ -15,6 +15,17 @@
 #include "include/shell.h"
 #include "include/commands.h"
 
+cmd_state_t *getcmd_state(char *args, linked_list_t **env)
+{
+    cmd_state_t *state = malloc(sizeof(cmd_state_t));
+
+    state->cmdargs = my_str_to_word_array(args);
+    state->arrenv = getenv_arr(*env);
+    state->paths = get_paths(state->cmdargs[0], *env);
+    state->env = env;
+    return state;
+}
+
 char **get_paths(char *name, linked_list_t *env)
 {
     char *path_var = my_getenv(env, "PATH");
@@ -54,21 +65,19 @@ int handle_status(int status)
 
 int run_prog(char *argv, linked_list_t **env)
 {
-    char **args = my_str_to_word_array(argv);
     int status;
-    char **arr = getenv_arr(*env);
-    char **paths = get_paths(args[0], *env);
+    cmd_state_t *state = getcmd_state(argv, env);
 
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {
-            handle_exec(args, arr, paths, *env);
+            handle_exec(state);
             break;
         }
-        if (my_strcmp(args[0], commands[i]) == 0) {
-            status = (commands_fn[i])(args, env);
+        if (my_strcmp(state->cmdargs[0], commands[i]) == 0) {
+            status = (commands_fn[i])(state->cmdargs, env);
             exit(status);
         }
     }
-    free_vars(args, arr, paths);
+    free_cmd_state(state);
     return status;
 }

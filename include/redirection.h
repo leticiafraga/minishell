@@ -39,7 +39,7 @@ typedef struct {
     char *cmd;
     redirection_opts2_t *in;
     redirection_opts2_t *out;
-} redirection_list2_t;
+} cmd_opts_t;
 
 typedef struct {
     char **arr;
@@ -49,13 +49,13 @@ typedef struct {
 typedef struct global_state_t {
     linked_list_t **env;
     int global_pipe[2];
-    cmds_arr_t *red;
-    redirection_list2_t *red_inner;
+    cmds_arr_t *cmd;
+    cmd_opts_t *red_inner;
 } global_state_t;
 
 cmds_arr_t *sep_semicolon(char *line);
-redirection_list2_t *get_cmds(char *semic);
-cmds_arr_t **get_pipes(cmds_arr_t *semic);
+cmd_opts_t *get_cmds(char *semic);
+cmds_arr_t **sep_pipes(cmds_arr_t *semic);
 
 int free_seps(redirection_list_t *r);
 int free_semic(cmds_arr_t *r);
@@ -64,14 +64,14 @@ void free_ptr_arr_content(char **args);
 int handle_semicolon(char **args, linked_list_t **env, int *index,
     redirection_list_t *red);
 int handle_semicolon2(
-    char *args, linked_list_t **env, redirection_list2_t *red);
+    char *args, linked_list_t **env, cmd_opts_t *red);
 int handle_redir_stdout(
-    char *args, linked_list_t **env, redirection_list2_t *red);
+    char *args, linked_list_t **env, cmd_opts_t *red);
 int handle_redir_stdout_append(
     char **args, linked_list_t **env,
     int *index, redirection_list_t *red);
 int handle_redir_stdin(
-    char *args, linked_list_t **env, redirection_list2_t *red);
+    char *args, linked_list_t **env, cmd_opts_t *red);
 
 int it_pipes(global_state_t *state);
 #endif

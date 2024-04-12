@@ -19,7 +19,7 @@ int handle_semicolon(char **args, linked_list_t **env,
 }
 
 int handle_semicolon2(
-    char *args, linked_list_t **env, redirection_list2_t *red)
+    char *args, linked_list_t **env, cmd_opts_t *red)
 {
     return run_prog(args, env);
 }

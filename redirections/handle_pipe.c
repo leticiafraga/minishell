@@ -29,22 +29,11 @@ static int (*commands_fn[5]) (char **args, linked_list_t **env) = {
     0
 };
 
-cmd_state_t *getcmd_state(char *args, linked_list_t **env)
-{
-    cmd_state_t *state = malloc(sizeof(cmd_state_t));
-
-    state->cmdargs = my_str_to_word_array(args);
-    state->arrenv = getenv_arr(*env);
-    state->paths = get_paths(state->cmdargs[0], *env);
-    state->env = env;
-    return state;
-}
-
 static int run_cmds(global_state_t *state)
 {
     int status = 0;
     sep_t symbol;
-    redirection_list2_t *red = state->red_inner;
+    cmd_opts_t *red = state->red_inner;
 
     if (red->in) {
         handle_redir_stdin(red->cmd, state->env, state->red_inner);
@@ -57,13 +46,11 @@ static int run_cmds(global_state_t *state)
 
 static int handle_exec_inner(char *args, global_state_t *g_state)
 {
-    cmd_state_t *state = getcmd_state(args, g_state->env);
-    redirection_list2_t *red = get_cmds(args);
+    cmd_opts_t *red = get_cmds(args);
     int status = 0;
 
     g_state->red_inner = red;
     status = run_cmds(g_state);
-    free_cmd_state(state);
     return status;
 }
 
@@ -99,26 +86,27 @@ static int handle_fork_2(char *args,
         handle_exec_inner(args, g_state);
     } else
         waitpid(child, &status, 0);
-    return status;
+    return handle_status(status);
 }
 
-static int handle_last(char *args, global_state_t *g_state, int *status)
+static int handle_last(char *args, global_state_t *g_state)
 {
-    cmd_state_t *state = getcmd_state(args, g_state->env);
+    char **cmdargs = my_str_to_word_array(args);
+    int status = 0;
 
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {
-            *status = handle_status(
-                handle_fork_2(args, g_state));
+            status = 
+                handle_fork_2(args, g_state);
             break;
         }
-        if (my_strcmp(state->cmdargs[0], commands[i]) == 0) {
-            *status = (commands_fn[i])(state->cmdargs, g_state->env);
+        if (my_strcmp(cmdargs[0], commands[i]) == 0) {
+            status = (commands_fn[i])(cmdargs, g_state->env);
             break;
         }
     }
-    free_cmd_state(state);
-    return *status;
+    free_ptr_arr(cmdargs);
+    return status;
 }
 
 static int restore_copies(int copies[2])
@@ -130,7 +118,7 @@ static int restore_copies(int copies[2])
 static int pipe_inner(global_state_t *state)
 {
     linked_list_t **env = state->env;
-    cmds_arr_t *red = state->red;
+    cmds_arr_t *red = state->cmd;
     int p_read = 0;
     int status;
     int i = 0;
@@ -144,8 +132,8 @@ static int pipe_inner(global_state_t *state)
             dup2(p_read, 0);
         }
     }
-    handle_last(red->arr[i], state, &status);
-    return handle_status(status);
+    status = handle_last(red->arr[i], state);
+    return status;
 }
 
 int it_pipes(global_state_t *state)

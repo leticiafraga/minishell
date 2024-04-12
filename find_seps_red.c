@@ -24,7 +24,7 @@ static int one_or_two_char(char *line, int i, char searched)
         return 0;
 }
 
-static int it_until_symbol(int start, redirection_list2_t *red, char *line)
+static int it_until_symbol(int start, cmd_opts_t *red, char *line)
 {
     int len = my_strlen(line);
 
@@ -55,7 +55,7 @@ static char *my_strdup_part(int start, int end, char *line)
     return dest;
 }
 
-static int create_in(int i, redirection_list2_t *red, char *line)
+static int create_in(int i, cmd_opts_t *red, char *line)
 {
     redirection_opts2_t *new = malloc(sizeof(redirection_opts2_t));
     int filename_end = 0;
@@ -73,7 +73,7 @@ static int create_in(int i, redirection_list2_t *red, char *line)
     return filename_end - 1;
 }
 
-static int create_out(int i, redirection_list2_t *red, char *line)
+static int create_out(int i, cmd_opts_t *red, char *line)
 {
     redirection_opts2_t *new = malloc(sizeof(redirection_opts2_t));
     int filename_end = 0;
@@ -91,7 +91,7 @@ static int create_out(int i, redirection_list2_t *red, char *line)
     return filename_end - 1;
 }
 
-static int it_seps(int end_cmd, int len, redirection_list2_t *red, char *line)
+static int it_seps(int end_cmd, int len, cmd_opts_t *red, char *line)
 {
     for (int i = end_cmd; i < len; i++) {
         switch (line[i]) {
@@ -107,7 +107,7 @@ static int it_seps(int end_cmd, int len, redirection_list2_t *red, char *line)
     }
 }
 
-static int it_line(redirection_list2_t *red, int len, char *line)
+static int it_line(cmd_opts_t *red, int len, char *line)
 {
     int end_cmd = len;
     char *cmds_line;
@@ -124,18 +124,18 @@ static int it_line(redirection_list2_t *red, int len, char *line)
     it_seps(end_cmd, len, red, line);
 }
 
-static redirection_list2_t *find_seps(char *line)
+static cmd_opts_t *find_seps(char *line)
 {
     int len = my_strlen(line);
-    redirection_list2_t *red = malloc(sizeof(redirection_list_t));
+    cmd_opts_t *red = malloc(sizeof(redirection_list_t));
 
     it_line(red, len, line);
     return red;
 }
 
-redirection_list2_t *get_cmds(char *line)
+cmd_opts_t *get_cmds(char *line)
 {
-    redirection_list2_t *r = malloc(sizeof(redirection_list2_t));
+    cmd_opts_t *r = malloc(sizeof(cmd_opts_t));
     int len;
     int cur = 0;
     char *cur_pos;

@@ -19,17 +19,16 @@ typedef struct cmd_state_t {
 
 int exec_prompt(int argc, char **argv, char **env);
 int run_prog(char *argv, linked_list_t **env);
-int it_semicolons(linked_list_t **env, cmds_arr_t *s);
+int it_semicolons(linked_list_t **env, char *line);
 char *my_getenv(linked_list_t *env, char *var);
-int try_paths(char **args, char **env, char **paths);
+int try_paths(cmd_state_t *state);
 linked_list_t *getenv_list(char **arr);
 char **getenv_arr(linked_list_t *list);
 
 int handle_cd(char **args, linked_list_t **env);
 int handle_setenv(char **args, linked_list_t **env);
 int handle_env(char **args, linked_list_t **env);
-void handle_exec(char **args, char **env, char **paths,
-    linked_list_t *listenv);
+void handle_exec(cmd_state_t *state);
 int handle_unsetenv(char **args, linked_list_t **env);
 
 void push_to_list(linked_list_t **begin, void *data);

@@ -5,8 +5,8 @@
 ** Minishell 2
 */
 
-#include "include/shell.h"
-#include "include/my.h"
+#include "../include/shell.h"
+#include "../include/my.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -38,7 +38,7 @@ int it_line_pipe(cmds_arr_t *red, char *line)
     free(newline);
 }
 
-cmds_arr_t **get_pipes(cmds_arr_t *semic)
+cmds_arr_t **sep_pipes(cmds_arr_t *semic)
 {
     int len;
     cmds_arr_t *red;

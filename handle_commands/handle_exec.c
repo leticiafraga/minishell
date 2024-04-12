@@ -14,8 +14,21 @@
 #include "../include/my.h"
 #include "../include/shell.h"
 
-int try_paths(char **args, char **env, char **paths)
+static void create_path_str(
+    cmd_state_t *state, char dest[200], int i)
 {
+    char **args = state->cmdargs;
+    char **paths = state->paths;
+
+    my_strcpy(dest, paths[i]);
+    my_strcat(dest, "/");
+    my_strcat(dest, args[0]);
+}
+
+int try_paths(cmd_state_t *state)
+{
+    char **args = state->cmdargs;
+    char **paths = state->paths;
     int res_exec = -1;
     char dest[200];
     int i = 0;
@@ -23,15 +36,13 @@ int try_paths(char **args, char **env, char **paths)
     dest[0] = '\0';
     if (paths != 0) {
         while (res_exec == -1 && paths[i] != 0) {
-            my_strcpy(dest, paths[i]);
-            my_strcat(dest, "/");
-            my_strcat(dest, args[0]);
-            res_exec = execve(dest, args, env);
+            create_path_str(state, dest, i);
+            res_exec = execve(dest, args, state->arrenv);
             i++;
         }
     }
     if (res_exec == -1)
-        res_exec = execve(args[0], args, env);
+        res_exec = execve(args[0], args, state->arrenv);
     return res_exec;
 }
 
@@ -52,20 +63,21 @@ static int handle_error(char *arg)
     return 1;
 }
 
-void handle_exec(char **args, char **env, char **paths,
-    linked_list_t *listenv)
+void handle_exec(cmd_state_t *state)
 {
+    char **args = state->cmdargs;
+    char **env = state->arrenv;
+    linked_list_t *listenv = *(state->env);
     int res_exec = 0;
 
     if (args[0][0] == '.' || args[0][0] == '/')
         res_exec = execve(args[0], args, env);
     else {
-        res_exec = try_paths(args, env, paths);
+        res_exec = try_paths(state);
     }
     if (res_exec == -1) {
         res_exec = handle_error(args[0]);
     }
-    free_vars(args, env, paths);
-    free_env(listenv);
+    free_cmd_state(state);
     exit(res_exec);
 }
