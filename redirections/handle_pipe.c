@@ -72,7 +72,7 @@ static int handle_fork(int p_read, int p_write,
     return status;
 }
 
-static int handle_fork_2(char *args,
+static int handle_fork_without_pipe(char *args,
     global_state_t *g_state)
 {
     pid_t child;
@@ -94,7 +94,7 @@ static int handle_last(char *args, global_state_t *g_state)
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {
             status =
-                handle_fork_2(args, g_state);
+                handle_fork_without_pipe(args, g_state);
             break;
         }
         if (my_strcmp(cmdargs[0], commands[i]) == 0) {

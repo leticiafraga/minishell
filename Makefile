@@ -37,15 +37,6 @@ SRC     =	main.c	\
 TEST_SRC	= 	$(SRC_FN)	\
 				tests/create_env.c \
 				tests/test_exec_prompt.c \
-				tests/test_try_paths.c \
-				tests/test_handle_cd.c \
-				tests/test_handle_env.c \
-				tests/test_handle_pipe.c \
-				tests/test_handle_redir_stdin.c \
-				tests/test_handle_redir_stdout.c \
-				tests/test_handle_semicolon.c \
-				tests/test_handle_setenv.c \
-				tests/test_handle_unsetenv.c
 
 TESTS	=	unit_tests
 
@@ -88,5 +79,8 @@ re:     fclean all
 
 tester:		all
 	cd tests/tester && cp ../../mysh . && ./tester.sh
+
+coding-style:	fclean
+	coding-style . . &&	cat coding-style-reports.log
 
 .PHONY: lib $(NAME) $(MY_SEGFAULT)

@@ -25,6 +25,8 @@ int try_paths(cmd_state_t *state);
 linked_list_t *getenv_list(char **arr);
 char **getenv_arr(linked_list_t *list);
 
+cmd_state_t *getcmd_state(char *args, linked_list_t **env);
+
 int handle_cd(char **args, global_state_t *state);
 int handle_setenv(char **args, global_state_t *state);
 int handle_env(char **args, global_state_t *state);
