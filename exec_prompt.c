@@ -21,10 +21,12 @@ int is_exit(char *line)
 static void handle_tty(global_state_t *state)
 {
     if (isatty(0)) {
-        my_putstr("$");
-        if (state->pwd)
-            my_putstr(state->pwd);
-        my_putstr("> ");
+        printf("\033[33m$");
+        if (state->pwd) {
+            printf("%s", state->pwd);
+        }
+        printf("\033[33m> ");
+        printf("\033[0;0m");
     }
 }
 
