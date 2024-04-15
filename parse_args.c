@@ -55,9 +55,10 @@ static int it_inside_str(char const *str, int i,
     char **res, int *word_cnt)
 {
     int beg = i + 1;
+    int delimiter = str[i];
 
     i += 1;
-    while (str[i] != '\'') {
+    while (str[i] != delimiter) {
         if (str[i] == '\0')
             return -1;
         i++;
@@ -85,7 +86,7 @@ static int it_outside_str(char const *str, int i,
 
 int validate_pos(char const *str, int i, char **res, int *word_cnt)
 {
-    if (str[i] == '\'') {
+    if (is_inhibitor(str[i])) {
         i = it_inside_str(str, i, res, word_cnt);
         if (i == -1)
             return -1;

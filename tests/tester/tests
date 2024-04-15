@@ -302,3 +302,11 @@ CLEAN=""
 TESTS=
   echo "echo '42 sh'"
 [200-END]
+
+[201]
+NAME="another inhibitor"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "echo \"42 sh\""
+[201-END]
