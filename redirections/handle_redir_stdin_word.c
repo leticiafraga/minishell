@@ -25,6 +25,13 @@ static int cmp_line(char *line, char *word)
     return res;
 }
 
+static void handle_tty(void)
+{
+    if (isatty(0)) {
+        printf("? ");
+    }
+}
+
 static char *get_whole_str(global_state_t *state, char *word)
 {
     size_t characters;
@@ -33,25 +40,15 @@ static char *get_whole_str(global_state_t *state, char *word)
     char *str = malloc(sizeof(char) * 1000);
 
     str[0] = '\0';
+    handle_tty();
     characters = getline(&line, &bufsize, stdin);
     while (cmp_line(line, word)) {
         my_strcat(str, line);
+        handle_tty();
         characters = getline(&line, &bufsize, stdin);
     }
     free(line);
     return str;
-}
-
-static char *get_newargs(char *str, char *args)
-{
-    int len = strlen(str) + strlen(args) + 3;
-    char *newargs = malloc(sizeof(char) * len);
-
-    strcpy(newargs, args);
-    strcat(newargs, " '");
-    strcat(newargs, str);
-    strcat(newargs, "'");
-    return newargs;
 }
 
 int handle_redir_stdin_word(
@@ -60,11 +57,20 @@ int handle_redir_stdin_word(
     char *word = clear_filename(state->red_inner->in->filename);
     int status;
     char *str = get_whole_str(state, word);
-    char *newargs = get_newargs(str, args);
+    int mypipe[2];
+    int dupin = dup(STDIN_FILENO);
 
-    status = run_prog(newargs, state);
+    if (pipe(mypipe) < 0)
+        return 84;
+    close(STDIN_FILENO);
+    dup(mypipe[0]);
+    dprintf(mypipe[1], str);
+    close(mypipe[1]);
+    status = run_prog(args, state);
+    dup2(dupin, STDIN_FILENO);
+    close(dupin);
+    close(mypipe[0]);
     free(word);
     free(str);
-    free(newargs);
     return status;
 }
