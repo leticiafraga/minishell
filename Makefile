@@ -35,8 +35,12 @@ SRC     =	main.c	\
 			$(SRC_FN)
 
 TEST_SRC	= 	$(SRC_FN)	\
-				tests/create_env.c \
+				tests/test_helpers.c \
 				tests/test_exec_prompt.c \
+				tests/test_handle_cd.c \
+				tests/test_handle_env.c \
+				tests/test_handle_setenv.c \
+				tests/test_handle_unsetenv.c
 
 TESTS	=	unit_tests
 
