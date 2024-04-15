@@ -6,6 +6,10 @@ a.out
 *.gcda
 *.gcno
 *.json
+
 mysh
+
 unit_tests
+my_segfault
+lsresult*
 /tester

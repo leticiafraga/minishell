@@ -71,7 +71,6 @@ int prompt(size_t bufsize, char *line, global_state_t *state)
 int exec_prompt(int argc, char **argv, char **env)
 {
     size_t bufsize = 500;
-    size_t characters;
     int status = 84;
     char line[500];
     linked_list_t *listenv = getenv_list(env);
