@@ -5,8 +5,8 @@
 ** Minishell 2
 */
 
-#include "include/shell.h"
-#include "include/my.h"
+#include "../include/shell.h"
+#include "../include/my.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -118,7 +118,7 @@ static int it_line(cmd_opts_t *red, int len, char *line)
     it_seps(end_cmd, len, red, line);
 }
 
-cmd_opts_t *get_cmds(char *line)
+cmd_opts_t *get_cmd_opts(char *line)
 {
     int len = my_strlen(line);
     cmd_opts_t *red = malloc(sizeof(cmd_opts_t));

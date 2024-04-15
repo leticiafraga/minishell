@@ -47,7 +47,7 @@ static int run_cmds(global_state_t *state)
 
 static int handle_exec_inner(char *args, global_state_t *g_state)
 {
-    cmd_opts_t *red = get_cmds(args);
+    cmd_opts_t *red = get_cmd_opts(args);
     int status = 0;
 
     g_state->red_inner = red;

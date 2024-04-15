@@ -4,8 +4,8 @@
 ** File description:
 ** Function that splits a string into words with ' ' as inhibitors.
 */
-#include "include/my.h"
-#include "include/helpers.h"
+#include "../include/my.h"
+#include "../include/helpers.h"
 #include <stdlib.h>
 #include <string.h>
 
