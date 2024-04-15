@@ -62,7 +62,7 @@ int free_seps(redirection_list_t *r);
 int free_cmds_arr(cmds_arr_t *r);
 void free_ptr_arr_content(char **args);
 
-int handle_semicolon2(
+int handle_semicolon(
     char *args, global_state_t *state);
 int handle_redir_stdout(
     char *args, global_state_t *state);

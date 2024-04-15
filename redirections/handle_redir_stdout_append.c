@@ -16,7 +16,7 @@
 int handle_redir_stdout_append(
     char *args, global_state_t *state)
 {
-    char *filename = clear_filename(args);
+    char *filename = clear_filename(state->red_inner->out->filename);
     int fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0644);
     int dupout = dup(1);
     int status;

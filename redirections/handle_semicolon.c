@@ -12,7 +12,7 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
-int handle_semicolon2(
+int handle_semicolon(
     char *args, global_state_t *state)
 {
     return run_prog(args, state);

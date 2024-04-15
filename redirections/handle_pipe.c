@@ -36,8 +36,7 @@ static int run_cmds(global_state_t *state)
     } else if (red->out) {
         return handle_out(red, state);
     } else
-        return handle_semicolon2(
-            red->cmd, state);
+        return run_prog(red->cmd, state);
 }
 
 static int handle_exec_inner(char *args, global_state_t *g_state)

@@ -25,7 +25,7 @@ static void handle_tty(global_state_t *state)
         if (state->pwd) {
             printf("%s", state->pwd);
         }
-        printf("\033[33m> ");
+        printf("> ");
         printf("\033[0;0m");
     }
 }
