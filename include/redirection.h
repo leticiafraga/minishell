@@ -57,6 +57,8 @@ int handle_redir_stdout_append(
     char *args, global_state_t *state);
 int handle_redir_stdin(
     char *args, global_state_t *state);
+int handle_redir_stdin_word(
+    char *args, global_state_t *state);
 
 int it_pipes(global_state_t *state);
 #endif

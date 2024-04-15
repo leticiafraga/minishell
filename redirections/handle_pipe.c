@@ -17,6 +17,13 @@ extern const char *commands[5];
 
 extern int (*commands_fn[]) (char **args, global_state_t *state);
 
+static int handle_in(cmd_opts_t *red, global_state_t *state)
+{
+    if (red->in->symbol == in1)
+        return handle_redir_stdin(red->cmd, state);
+    return handle_redir_stdin_word(red->cmd, state);
+}
+
 static int handle_out(cmd_opts_t *red, global_state_t *state)
 {
     if (red->out->symbol == out1)
@@ -31,8 +38,7 @@ static int run_cmds(global_state_t *state)
     cmd_opts_t *red = state->red_inner;
 
     if (red->in) {
-        return handle_redir_stdin(
-            red->cmd, state);
+        return handle_in(red, state);
     } else if (red->out) {
         return handle_out(red, state);
     } else
