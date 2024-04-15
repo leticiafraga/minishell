@@ -294,3 +294,11 @@ TESTS=
   echo "cat out"
   echo "rm out"
 [106-END]
+
+[200]
+NAME="basic inhibitor"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "echo '42 sh'"
+[200-END]

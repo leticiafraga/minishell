@@ -19,7 +19,11 @@ cmd_state_t *getcmd_state(char *args, linked_list_t **env)
 {
     cmd_state_t *state = malloc(sizeof(cmd_state_t));
 
-    state->cmdargs = my_str_to_word_array(args);
+    state->cmdargs = parse_args(args);
+    if (state->cmdargs == 0) {
+        free(state);
+        return 0;
+    }
     state->arrenv = getenv_arr(*env);
     state->paths = get_paths(state->cmdargs[0], *env);
     state->env = env;
@@ -68,6 +72,8 @@ int run_prog(char *argv, global_state_t *g_state)
     int status;
     cmd_state_t *state = getcmd_state(argv, g_state->env);
 
+    if (state == 0)
+        return 84;
     for (int i = 0; i < 5; i++) {
         if (commands[i] == 0) {
             handle_exec(state);
