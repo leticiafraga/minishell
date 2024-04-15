@@ -10,12 +10,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static int add_to_map(redirection_opts_t *new, redirection_list_t *red)
-{
-    red->arr[red->cnt] = new;
-    red->cnt ++;
-}
-
 static int one_or_two_char(char *line, int i, char searched)
 {
     if (line[i + 1] == searched)
@@ -57,7 +51,7 @@ static char *my_strdup_part(int start, int end, char *line)
 
 static int create_in(int i, cmd_opts_t *red, char *line)
 {
-    redirection_opts2_t *new = malloc(sizeof(redirection_opts2_t));
+    redirection_opts_t *new = malloc(sizeof(redirection_opts_t));
     int filename_end = 0;
 
     red->in = new;
@@ -75,7 +69,7 @@ static int create_in(int i, cmd_opts_t *red, char *line)
 
 static int create_out(int i, cmd_opts_t *red, char *line)
 {
-    redirection_opts2_t *new = malloc(sizeof(redirection_opts2_t));
+    redirection_opts_t *new = malloc(sizeof(redirection_opts_t));
     int filename_end = 0;
 
     red->out = new;
@@ -127,7 +121,7 @@ static int it_line(cmd_opts_t *red, int len, char *line)
 cmd_opts_t *get_cmds(char *line)
 {
     int len = my_strlen(line);
-    cmd_opts_t *red = malloc(sizeof(redirection_list_t));
+    cmd_opts_t *red = malloc(sizeof(cmd_opts_t));
 
     red->in = 0;
     red->out = 0;

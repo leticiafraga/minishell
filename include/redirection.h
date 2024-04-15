@@ -19,26 +19,14 @@ typedef enum sep_t {
 } sep_t;
 
 typedef struct {
-    char *cmd;
+    char *filename;
     sep_t symbol;
-    int next_cmd_index;
-    int prev_cmd_end;
 } redirection_opts_t;
 
 typedef struct {
-    redirection_opts_t **arr;
-    int cnt;
-} redirection_list_t;
-
-typedef struct {
-    char *filename;
-    sep_t symbol;
-} redirection_opts2_t;
-
-typedef struct {
     char *cmd;
-    redirection_opts2_t *in;
-    redirection_opts2_t *out;
+    redirection_opts_t *in;
+    redirection_opts_t *out;
 } cmd_opts_t;
 
 typedef struct {
@@ -58,7 +46,6 @@ cmds_arr_t *sep_semicolon(char *line);
 cmd_opts_t *get_cmds(char *semic);
 cmds_arr_t **sep_pipes(cmds_arr_t *semic);
 
-int free_seps(redirection_list_t *r);
 int free_cmds_arr(cmds_arr_t *r);
 void free_ptr_arr_content(char **args);
 
