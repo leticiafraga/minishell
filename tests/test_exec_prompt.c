@@ -29,3 +29,13 @@ Test(put_arg_err_test, no_arg, .init=cr_redirect_stderr)
     cr_assert_stderr_eq_str(": testing\n");
 }
 
+Test(parse_args_test, basic_tests)
+{
+    char *str = "echo '42 sh .c'";
+    char **res = parse_args(str);
+
+    cr_assert_str_eq(res[0], "echo");
+    cr_assert_str_eq(res[1], "42 sh .c");
+    cr_assert_eq(res[2], 0);
+    free_ptr_arr(res);
+}

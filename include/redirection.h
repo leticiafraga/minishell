@@ -43,7 +43,7 @@ typedef struct global_state_t {
 } global_state_t;
 
 cmds_arr_t *sep_semicolon(char *line);
-cmd_opts_t *get_cmds(char *semic);
+cmd_opts_t *get_cmd_opts(char *semic);
 cmds_arr_t **sep_pipes(cmds_arr_t *semic);
 
 int free_cmds_arr(cmds_arr_t *r);

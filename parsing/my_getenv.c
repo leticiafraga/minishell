@@ -5,8 +5,8 @@
 ** my_getenv
 */
 
-#include "include/my.h"
-#include "include/linked_list.h"
+#include "../include/my.h"
+#include "../include/linked_list.h"
 
 char *my_getenv(linked_list_t *env, char *var)
 {
