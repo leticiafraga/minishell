@@ -23,6 +23,7 @@ static int cnt_pipes(char *line)
     return cnt;
 }
 
+// WARN: no return
 int it_line_pipe(cmds_arr_t *red, char *line)
 {
     char *newline = my_strdup(line);

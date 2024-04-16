@@ -5,34 +5,35 @@
 ## makefile
 ##
 
-SRC_FN	=	run_prog.c \
-			exec_prompt.c \
-			handle_commands/handle_cd.c \
-			handle_commands/handle_env.c \
-			handle_commands/handle_exec.c \
-			handle_commands/handle_setenv.c \
-			handle_commands/handle_unsetenv.c \
-			list/push_to_list.c \
-			list/push_unique_to_list.c \
-			list/delete_in_list.c \
-			list/add_item.c \
-			helpers/args_parsing.c \
-			helpers/clear_filename.c \
-			helpers/getenv_list.c \
-			helpers/free_env.c \
-			helpers/put_arg_err.c \
-			helpers/free_seps.c \
-			redirections/handle_semicolon.c \
-			redirections/handle_pipe.c \
-			redirections/handle_redir_stdout.c \
-			redirections/handle_redir_stdout_append.c \
-			redirections/handle_redir_stdin.c \
-			redirections/handle_redir_stdin_word.c \
-			redirections/sep_pipes.c \
-			redirections/sep_semicolon.c \
-			parsing/get_cmd_opts.c \
-			parsing/my_getenv.c \
-			parsing/parse_args.c
+SRC_FN	=	./run_prog.c \
+			./exec_prompt.c \
+			./handle_commands/handle_cd.c \
+			./handle_commands/handle_env.c \
+			./handle_commands/handle_exec.c \
+			./handle_commands/handle_setenv.c \
+			./handle_commands/handle_unsetenv.c \
+			./list/push_to_list.c \
+			./list/push_unique_to_list.c \
+			./list/delete_in_list.c \
+			./list/add_item.c \
+			./helpers/args_parsing.c \
+			./helpers/clear_filename.c \
+			./helpers/getenv_list.c \
+			./helpers/free_env.c \
+			./helpers/put_arg_err.c \
+			./helpers/free_seps.c \
+			./helpers/concat_strings.c\
+			./redirections/handle_semicolon.c \
+			./redirections/handle_pipe.c \
+			./redirections/handle_redir_stdout.c \
+			./redirections/handle_redir_stdout_append.c \
+			./redirections/handle_redir_stdin.c \
+			./redirections/handle_redir_stdin_word.c \
+			./redirections/sep_pipes.c \
+			./redirections/sep_semicolon.c \
+			./parsing/get_cmd_opts.c \
+			./parsing/my_getenv.c \
+			./parsing/parse_args.c
 
 SRC     =	main.c	\
 			$(SRC_FN)
