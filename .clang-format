@@ -1,0 +1,25 @@
+BasedOnStyle: LLVM
+AccessModifierOffset: -2
+AlignConsecutiveMacros: true
+AlignConsecutiveAssignments: false
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: true
+BinPackParameters: false
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass:      true
+  AfterControlStatement: false
+  AfterEnum:       false
+  AfterFunction:   true
+  AfterNamespace:  true
+  AfterObjCDeclaration: true
+  AfterStruct:     false
+  AfterUnion:      true
+  BeforeCatch:     true
+  BeforeElse:      false
+  IndentBraces:    false
+IndentCaseLabels: false
+IndentWidth: 4
+

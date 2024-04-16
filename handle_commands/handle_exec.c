@@ -5,24 +5,33 @@
 ** Minishell
 */
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
-#include <sys/signal.h>
+#include "../include/helpers.h"
 #include "../include/my.h"
 #include "../include/shell.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/signal.h>
+#include <unistd.h>
 
-static void create_path_str(
-    cmd_state_t *state, char dest[200], int i)
+/**
+ * @brief checks if file exists and is executable
+ * f_path is being concatnated with fname with "/" as a separator
+ * @param fname
+ * @param f_path
+ * @return
+ */
+int file_exists_and_ex(const char *fname, const char *f_path)
 {
-    char **args = state->cmdargs;
-    char **paths = state->paths;
+    char *a = concat_strings(3, f_path, "/", fname);
 
-    my_strcpy(dest, paths[i]);
-    my_strcat(dest, "/");
-    my_strcat(dest, args[0]);
+    if ((access(a, F_OK) == 0) && access(a, X_OK) == 0) {
+        free(a);
+        return 1;
+    }
+    free(a);
+    return 0;
 }
 
 int try_paths(cmd_state_t *state)
@@ -30,36 +39,42 @@ int try_paths(cmd_state_t *state)
     char **args = state->cmdargs;
     char **paths = state->paths;
     int res_exec = -1;
-    char dest[200];
     int i = 0;
 
-    dest[0] = '\0';
-    if (paths != 0) {
-        while (res_exec == -1 && paths[i] != 0) {
-            create_path_str(state, dest, i);
-            res_exec = execve(dest, args, state->arrenv);
-            i++;
+    for (size_t i = 0; paths && paths[i]; ++i) {
+        if (file_exists_and_ex(state->cmdargs[0], paths[i])) {
+            res_exec =
+                execve(concat_strings(3, paths[i], "/", state->cmdargs[0]),
+                       args, state->arrenv);
+            return res_exec;
         }
     }
-    if (res_exec == -1)
-        res_exec = execve(args[0], args, state->arrenv);
+    res_exec = execve(args[0], args, state->arrenv);
     return res_exec;
 }
 
 static int handle_error(char *arg)
 {
     switch (errno) {
-        case 13:
-            put_arg_err(arg, "Permission denied.");
-            break;
-        case 8:
-            put_arg_err(arg,
-                "Exec format error. Wrong Architecture.");
-            break;
-        default:
-            put_arg_err(arg, "Command not found.");
-            break;
+    case 13:
+        put_arg_err(arg, "Permission denied.");
+        break;
+    case 8:
+        put_arg_err(arg, "Exec format error. Wrong Architecture.");
+        break;
+    default:
+        put_arg_err(arg, "Command not found.");
+        break;
     }
+    return 1;
+}
+
+int needs_search_in_path(char **arg)
+{
+    if (arg[0][0] && arg[0][0] == '/')
+        return 0;
+    if (arg[0][1] && arg[0][0] == '.' && arg[0][1] == '/')
+        return 0;
     return 1;
 }
 
@@ -70,7 +85,7 @@ void handle_exec(cmd_state_t *state)
     linked_list_t *listenv = *(state->env);
     int res_exec = 0;
 
-    if (args[0][0] == '.' || args[0][0] == '/')
+    if (!needs_search_in_path(args))
         res_exec = execve(args[0], args, env);
     else {
         res_exec = try_paths(state);

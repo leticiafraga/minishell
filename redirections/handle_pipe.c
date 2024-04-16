@@ -13,8 +13,11 @@
 #include "../include/shell.h"
 #include "../include/linked_list.h"
 
+// NOTE: maybe it's better to define static const commands in the header
+// and not use extern here. In my opinion it's a bit ambigious.
 extern const char *commands[5];
 
+// The same goes here
 extern int (*commands_fn[]) (char **args, global_state_t *state);
 
 static int handle_in(cmd_opts_t *red, global_state_t *state)
@@ -111,6 +114,7 @@ static int handle_last(char *args, global_state_t *g_state)
     return status;
 }
 
+// WARN: int function no return
 static int restore_copies(int copies[2])
 {
     dup2(copies[0], 0);
