@@ -40,12 +40,13 @@ int try_paths(cmd_state_t *state)
     char **paths = state->paths;
     int res_exec = -1;
     int i = 0;
+    char *path_buffer;
 
     for (size_t i = 0; paths && paths[i]; ++i) {
         if (file_exists_and_ex(state->cmdargs[0], paths[i])) {
-            res_exec =
-                execve(concat_strings(3, paths[i], "/", state->cmdargs[0]),
-                       args, state->arrenv);
+            path_buffer = concat_strings(3, paths[i], "/", state->cmdargs[0]);
+            res_exec = execve(path_buffer, args, state->arrenv);
+            free(path_buffer);
             return res_exec;
         }
     }
