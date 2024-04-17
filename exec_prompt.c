@@ -77,10 +77,11 @@ int exec_prompt(int argc, char **argv, char **env)
     global_state_t state;
 
     state.env = &listenv;
-    state.pwd = my_getenv(listenv, "PWD");
+    state.pwd = my_strdup(my_getenv(listenv, "PWD"));
     if (argc == 1) {
         status = prompt(bufsize, line, &state);
     }
+    free(state.pwd);
     free_env(listenv);
     return status;
 }

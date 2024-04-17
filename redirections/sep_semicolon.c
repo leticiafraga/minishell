@@ -23,7 +23,7 @@ static int cnt_semicolons(char *line)
     return cnt;
 }
 
-int it_line_semicolon(cmds_arr_t *red, char *line)
+int it_line_semicolon(cmds_arr_t *semic, char *line)
 {
     char *newline = my_strdup(line);
     char *token = strtok(newline, ";");
@@ -31,8 +31,8 @@ int it_line_semicolon(cmds_arr_t *red, char *line)
 
     while (token != NULL) {
         new = my_strdup(token);
-        red->arr[red->cnt] = new;
-        red->cnt ++;
+        semic->arr[semic->cnt] = new;
+        semic->cnt ++;
         token = strtok(NULL, ";");
     }
     free(newline);
@@ -41,11 +41,11 @@ int it_line_semicolon(cmds_arr_t *red, char *line)
 cmds_arr_t *sep_semicolon(char *line)
 {
     int len = my_strlen(line);
-    cmds_arr_t *red = malloc(sizeof(cmds_arr_t));
+    cmds_arr_t *semicolons = malloc(sizeof(cmds_arr_t));
     int cnt = cnt_semicolons(line);
 
-    red->cnt = 0;
-    red->arr = malloc(sizeof(char *) * (cnt + 1));
-    it_line_semicolon(red, line);
-    return red;
+    semicolons->cnt = 0;
+    semicolons->arr = malloc(sizeof(char *) * (cnt + 1));
+    it_line_semicolon(semicolons, line);
+    return semicolons;
 }

@@ -18,6 +18,7 @@ global_state_t *create_state()
     linked_list_t **env_ptr = malloc(sizeof(linked_list_t*));
     *env_ptr = create_env();
     state->env = env_ptr;
+    state->pwd = my_strdup("home");
     return state;
 }
 
@@ -29,5 +30,6 @@ void free_state(global_state_t *state)
     free(env->data);
     free(env);
     free(state->env);
+    free(state->pwd);
     free(state);
 }

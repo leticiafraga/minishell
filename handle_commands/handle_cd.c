@@ -7,6 +7,7 @@
 
 #include <unistd.h>
 #include <errno.h>
+#include <stdlib.h>
 #include "../include/my.h"
 #include "../include/shell.h"
 
@@ -72,6 +73,12 @@ static void handle_error(char *arg)
     }
 }
 
+static void update_state_pwd(global_state_t *state, char *cur)
+{
+    free(state->pwd);
+    state->pwd = my_strdup(cur);
+}
+
 int handle_cd(char **args, global_state_t *state)
 {
     char *path = args[1];
@@ -91,5 +98,6 @@ int handle_cd(char **args, global_state_t *state)
     add_item("OLDPWD", cur, state->env);
     getcwd(cur, 200);
     add_item("PWD", cur, state->env);
+    update_state_pwd(state, cur);
     return status;
 }

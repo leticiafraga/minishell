@@ -101,7 +101,6 @@ char **it_str(char const *str, int cnt)
     int i = 0;
     int word_cnt = 0;
     char **res = malloc(sizeof(char *) * (cnt + 1));
-    char **cur_res = res;
 
     while (str[i] != '\0' && str[i] != '\n') {
         i = validate_pos(str, i, res, &word_cnt);
