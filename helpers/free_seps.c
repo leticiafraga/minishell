@@ -9,7 +9,7 @@
 #include "../include/shell.h"
 #include <stdlib.h>
 
-int free_cmds_arr(cmds_arr_t *r)
+void free_cmds_arr(cmds_arr_t *r)
 {
     for (int i = 0; i < r->cnt; i++) {
         free(r->arr[i]);

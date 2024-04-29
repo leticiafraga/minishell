@@ -39,7 +39,6 @@ int try_paths(cmd_state_t *state)
     char **args = state->cmdargs;
     char **paths = state->paths;
     int res_exec = -1;
-    int i = 0;
     char *path_buffer;
 
     for (size_t i = 0; paths && paths[i]; ++i) {
@@ -83,7 +82,6 @@ void handle_exec(cmd_state_t *state)
 {
     char **args = state->cmdargs;
     char **env = state->arrenv;
-    linked_list_t *listenv = *(state->env);
     int res_exec = 0;
 
     if (!needs_search_in_path(args))

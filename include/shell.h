@@ -37,7 +37,7 @@ void push_to_list(linked_list_t **begin, void *data);
 void push_unique_to_list(linked_list_t **begin, env_item_t *data);
 void *delete_in_list(linked_list_t **begin,
     void const *ref, int (*cmp_fct) ());
-int add_item(char *key, char *value, linked_list_t **env);
+void add_item(char *key, char *value, linked_list_t **env);
 
 void free_env(linked_list_t *list);
 void free_ptr_arr(char **args);

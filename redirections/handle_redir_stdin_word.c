@@ -32,17 +32,17 @@ static void handle_tty(void)
     }
 }
 
-static char *get_whole_str(global_state_t *state, char *word)
+static char *get_whole_str(char *word)
 {
-    size_t characters = 0;
     size_t bufsize = 500;
+    int characters = 0;
     char *line = malloc(sizeof(char) * 500);
     char *str = malloc(sizeof(char) * 1000);
 
     str[0] = '\0';
     handle_tty();
     characters = getline(&line, &bufsize, stdin);
-    while (cmp_line(line, word)) {
+    while (cmp_line(line, word) && characters != -1) {
         my_strcat(str, line);
         handle_tty();
         characters = getline(&line, &bufsize, stdin);
@@ -56,7 +56,7 @@ int handle_redir_stdin_word(
 {
     char *word = clear_filename(state->red_inner->in->filename);
     int status;
-    char *str = get_whole_str(state, word);
+    char *str = get_whole_str(word);
     int mypipe[2];
     int dupin = dup(STDIN_FILENO);
 

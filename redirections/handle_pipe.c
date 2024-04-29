@@ -112,8 +112,7 @@ static int handle_last(char *args, global_state_t *g_state)
     return status;
 }
 
-// WARN: int function no return
-static int restore_copies(int copies[2])
+static void restore_copies(int copies[2])
 {
     dup2(copies[0], 0);
     dup2(copies[1], 1);

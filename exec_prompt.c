@@ -50,7 +50,7 @@ int it_semicolons(global_state_t *state, char *line)
 int prompt(size_t bufsize, char *line, global_state_t *state)
 {
     int status = 0;
-    size_t characters;
+    int characters;
 
     while (1) {
         handle_tty(state);

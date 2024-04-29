@@ -23,8 +23,7 @@ static int cnt_pipes(char *line)
     return cnt;
 }
 
-// WARN: no return
-int it_line_pipe(cmds_arr_t *pipes, char *line)
+void it_line_pipe(cmds_arr_t *pipes, char *line)
 {
     char *newline = my_strdup(line);
     char *token = strtok(newline, "|");

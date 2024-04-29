@@ -9,7 +9,7 @@
 #include "../include/my.h"
 #include "../include/shell.h"
 
-int add_item(char *key, char *value, linked_list_t **env)
+void add_item(char *key, char *value, linked_list_t **env)
 {
     env_item_t *item = malloc(sizeof(env_item_t));
 
