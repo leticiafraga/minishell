@@ -63,8 +63,7 @@ static int exec_line(char *line, global_state_t *state)
     tree_t *tree = create_tree(list);
 
     print_tree(tree, 0);
-    run_tree(tree, state);
-    return 0;
+    return run_tree(tree, state);
 }
 
 int prompt(size_t bufsize, char *line, global_state_t *state)

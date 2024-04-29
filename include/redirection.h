@@ -8,6 +8,7 @@
 #ifndef REDIRECTION_H
     #define REDIRECTION_H
     #include "linked_list.h"
+    #include "tree.h"
 
 typedef enum sep_t {
     in1,
@@ -59,6 +60,13 @@ int handle_redir_stdin(
     char *args, global_state_t *state);
 int handle_redir_stdin_word(
     char *args, global_state_t *state);
+
+int tree_redir_stdin(
+    tree_t *root, global_state_t *state);
+int tree_redir_stdout(
+    tree_t *root, global_state_t *state);
+int tree_redir_stdout_append(
+    tree_t *root, global_state_t *state);
 
 int it_pipes(global_state_t *state);
 #endif
