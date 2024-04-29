@@ -35,6 +35,7 @@ int handle_unsetenv(char **args, global_state_t *state);
 
 void push_to_list(linked_list_t **begin, void *data);
 void push_unique_to_list(linked_list_t **begin, env_item_t *data);
+void append_to_list(linked_list_t **begin, void *data);
 void *delete_in_list(linked_list_t **begin,
     void const *ref, int (*cmp_fct) ());
 int add_item(char *key, char *value, linked_list_t **env);
@@ -50,7 +51,9 @@ void put_arg_err(char *arg, char *err);
 
 char **get_paths(char *name, linked_list_t *env);
 char **parse_args(char const *str);
+linked_list_t *parse_line(char const *str);
 
 int handle_status(int status);
+
 
 #endif
