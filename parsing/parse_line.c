@@ -88,6 +88,7 @@ static int validate_pos(char const *str, int i,
 linked_list_t *parse_line(char const *str)
 {
     linked_list_t *tokens = 0;
+    linked_list_t *it = tokens;
     int i = 0;
 
     while (str[i] != '\0' && str[i] != '\n') {
@@ -95,7 +96,6 @@ linked_list_t *parse_line(char const *str)
         if (i == -1)
             return 0;
     }
-    linked_list_t *it = tokens;
     while(it != 0) {
         printf("%s - ", it->data);
         it = it->next;
