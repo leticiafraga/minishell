@@ -30,24 +30,7 @@ static void handle_tty(global_state_t *state)
     }
 }
 
-int it_semicolons(global_state_t *state, char *line)
-{
-    cmds_arr_t **r;
-    int status = 0;
-    cmds_arr_t *s = sep_semicolon(line);
-
-    r = sep_pipes(s);
-    for (int i = 0; i < s->cnt; i++) {
-        state->cmd = r[i];
-        status = it_pipes(state);
-        free_cmds_arr(r[i]);
-    }
-    free(r);
-    free_cmds_arr(s);
-    return status;
-}
-
-static int exec_line(char *line, global_state_t *state)
+int exec_line(char *line, global_state_t *state)
 {
     linked_list_t *list = parse_line(line);
     tree_t *tree = create_tree(list);

@@ -19,8 +19,8 @@ typedef struct cmd_state_t {
 } cmd_state_t;
 
 int exec_prompt(int argc, char **env);
+int exec_line(char *line, global_state_t *state);
 int run_prog(char *argv, global_state_t *g_state);
-int it_semicolons(global_state_t *state, char *line);
 char *my_getenv(linked_list_t *env, char *var);
 int try_paths(cmd_state_t *state);
 linked_list_t *getenv_list(char **arr);

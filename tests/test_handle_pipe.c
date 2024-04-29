@@ -10,7 +10,7 @@ Test(it_pipes_test, basic_test, .init=cr_redirect_stdout)
     global_state_t *state = create_state();
     char *s = "ls | grep run_prog.c";
 
-    int res = it_semicolons(state, s);
+    int res = exec_line(s, state);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("run_prog.c\n");
@@ -22,7 +22,7 @@ Test(it_pipes_test, multiple_pipe, .init=cr_redirect_stdout)
     global_state_t *state = create_state();
     char *s = "ls | grep run_prog.c | wc -l";
 
-    int res = it_semicolons(state, s);
+    int res = exec_line(s, state);
 
     cr_assert_eq(res, 0);
     cr_assert_stdout_eq_str("1\n");

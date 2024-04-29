@@ -18,7 +18,7 @@ static int one_or_two_char(char *line, int i, char searched)
         return 0;
 }
 
-static int it_until_symbol(int start, char *line)
+static int it_until_symbol(int start, cmd_opts_t *red, char *line)
 {
     int len = my_strlen(line);
 
@@ -57,11 +57,11 @@ static int create_in(int i, cmd_opts_t *red, char *line)
     red->in = new;
     if (one_or_two_char(line, i, '<')) {
         new->symbol = in2;
-        filename_end = it_until_symbol(i + 2, line);
+        filename_end = it_until_symbol(i + 2, red, line);
         new->filename = my_strdup_part(i + 2, filename_end, line);
     } else {
         new->symbol = in1;
-        filename_end = it_until_symbol(i + 1, line);
+        filename_end = it_until_symbol(i + 1, red, line);
         new->filename = my_strdup_part(i + 1, filename_end, line);
     }
     return filename_end - 1;
@@ -75,17 +75,17 @@ static int create_out(int i, cmd_opts_t *red, char *line)
     red->out = new;
     if (one_or_two_char(line, i, '>')) {
         new->symbol = out2;
-        filename_end = it_until_symbol(i + 2, line);
+        filename_end = it_until_symbol(i + 2, red, line);
         new->filename = my_strdup_part(i + 2, filename_end, line);
     } else {
         new->symbol = out1;
-        filename_end = it_until_symbol(i + 1, line);
+        filename_end = it_until_symbol(i + 1, red, line);
         new->filename = my_strdup_part(i + 1, filename_end, line);
     }
     return filename_end - 1;
 }
 
-static void it_seps(int end_cmd, int len, cmd_opts_t *red, char *line)
+static int it_seps(int end_cmd, int len, cmd_opts_t *red, char *line)
 {
     for (int i = end_cmd; i < len; i++) {
         switch (line[i]) {
@@ -101,7 +101,7 @@ static void it_seps(int end_cmd, int len, cmd_opts_t *red, char *line)
     }
 }
 
-static void it_line(cmd_opts_t *red, int len, char *line)
+static int it_line(cmd_opts_t *red, int len, char *line)
 {
     int end_cmd = len;
     char *cmds_line;

@@ -61,13 +61,13 @@ static int switch_redirections(tree_t *root, global_state_t *state)
         return 0;
     switch (root->type) {
     case OP_IN1:
-        return tree_redir_stdin(root, state);
+        return handle_redir_stdin(root, state);
     case OP_IN2:
-        return tree_redir_stdin_word(root, state);
+        return handle_redir_stdin_word(root, state);
     case OP_OUT1:
-        return tree_redir_stdout(root, state);
+        return handle_redir_stdout(root, state);
     case OP_OUT2:
-        return tree_redir_stdout_append(root, state);
+        return handle_redir_stdout_append(root, state);
     default:
         return 0;
     }
@@ -84,7 +84,7 @@ int run_tree(tree_t *root, global_state_t *state)
         run_tree(root->left, state);
         return run_tree(root->right, state);
     case OP_PIPE:
-        return tree_pipe(root, state);
+        return handle_pipe(root, state);
     default:
         return switch_redirections(root, state);
     }

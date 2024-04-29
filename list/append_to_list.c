@@ -20,7 +20,6 @@ static void add_last_item(linked_list_t **begin, linked_list_t *new)
 
 void append_to_list(linked_list_t **begin, void *data)
 {
-    linked_list_t *cur = *begin;
     linked_list_t *new = malloc(sizeof(linked_list_t));
 
     new->data = data;

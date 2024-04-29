@@ -14,28 +14,6 @@
 #include "../include/linked_list.h"
 
 int handle_redir_stdin(
-    char *args, global_state_t *state)
-{
-    char *filename = clear_filename(state->red_inner->in->filename);
-    int fd = open(filename, O_RDONLY);
-    int dupin = dup(STDIN_FILENO);
-    int status;
-
-    if (fd < 0) {
-        free(filename);
-        return 1;
-    }
-    close(STDIN_FILENO);
-    dup(fd);
-    close(fd);
-    status = run_prog(args, state);
-    dup2(dupin, STDIN_FILENO);
-    close(dupin);
-    free(filename);
-    return status;
-}
-
-int tree_redir_stdin(
     tree_t *root, global_state_t *state)
 {
     char *filename = clear_filename(root->right->data);

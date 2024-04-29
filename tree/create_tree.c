@@ -15,7 +15,6 @@
 
 static operator_t get_curr_operator(char *token)
 {
-    operator_t current_operator = STRING;
     int i = 0;
 
     while (OPERATORS[i] != 0) {
