@@ -55,10 +55,26 @@ static int exec_cmd(tree_t *root, global_state_t *state)
     return status;
 }
 
+static int switch_redirections(tree_t *root, global_state_t *state)
+{
+    if (root == NULL)
+        return 0;
+    switch (root->type) {
+    case OP_IN1:
+        return tree_redir_stdin(root, state);
+    case OP_IN2:
+        return tree_redir_stdin_word(root, state);
+    case OP_OUT1:
+        return tree_redir_stdout(root, state);
+    case OP_OUT2:
+        return tree_redir_stdout_append(root, state);
+    default:
+        return 0;
+    }
+}
+
 int run_tree(tree_t *root, global_state_t *state)
 {
-    int status = 0;
-
     if (root == NULL)
         return 0;
     switch (root->type) {
@@ -67,14 +83,9 @@ int run_tree(tree_t *root, global_state_t *state)
     case OP_SEMICOLON:
         run_tree(root->left, state);
         return run_tree(root->right, state);
-    case OP_IN1:
-        return tree_redir_stdin(root, state);
-    case OP_OUT1:
-        return tree_redir_stdout(root, state);
-    case OP_OUT2:
-        return tree_redir_stdout_append(root, state);
+    case OP_PIPE:
+        return tree_pipe(root, state);
     default:
-        break;
+        return switch_redirections(root, state);
     }
-    return status;
 }

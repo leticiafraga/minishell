@@ -63,9 +63,13 @@ int handle_redir_stdin_word(
 
 int tree_redir_stdin(
     tree_t *root, global_state_t *state);
+int tree_redir_stdin_word(
+    tree_t *root, global_state_t *state);
 int tree_redir_stdout(
     tree_t *root, global_state_t *state);
 int tree_redir_stdout_append(
+    tree_t *root, global_state_t *state);
+int tree_pipe(
     tree_t *root, global_state_t *state);
 
 int it_pipes(global_state_t *state);

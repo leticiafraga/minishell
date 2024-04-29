@@ -74,3 +74,27 @@ int handle_redir_stdin_word(
     free(str);
     return status;
 }
+
+int tree_redir_stdin_word(
+    tree_t *root, global_state_t *state)
+{
+    char *word = clear_filename(root->right->data);
+    int status;
+    char *str = get_whole_str(state, word);
+    int mypipe[2];
+    int dupin = dup(STDIN_FILENO);
+
+    if (pipe(mypipe) < 0)
+        return 84;
+    close(STDIN_FILENO);
+    dup(mypipe[0]);
+    dprintf(mypipe[1], str);
+    close(mypipe[1]);
+    status = run_tree(root->left, state);
+    dup2(dupin, STDIN_FILENO);
+    close(dupin);
+    close(mypipe[0]);
+    free(word);
+    free(str);
+    return status;
+}

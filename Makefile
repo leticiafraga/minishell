@@ -32,6 +32,7 @@ SRC_FN	=	./run_prog.c \
 			./redirections/handle_redir_stdin.c \
 			./redirections/handle_redir_stdin_word.c \
 			./redirections/sep_pipes.c \
+			./redirections/tree_pipe.c \
 			./redirections/sep_semicolon.c \
 			./parsing/get_cmd_opts.c \
 			./parsing/my_getenv.c \

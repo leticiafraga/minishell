@@ -47,22 +47,11 @@ int it_semicolons(global_state_t *state, char *line)
     return status;
 }
 
-void print_tree(tree_t *root, int level)
-{
-    if (root == NULL) {
-        return;
-    }
-    printf("Data: %s, Type: %d, Level %d\n", root->data, root->type, level);
-    print_tree(root->left, level + 1);
-    print_tree(root->right, level + 1);
-}
-
 static int exec_line(char *line, global_state_t *state)
 {
     linked_list_t *list = parse_line(line);
     tree_t *tree = create_tree(list);
 
-    print_tree(tree, 0);
     return run_tree(tree, state);
 }
 
