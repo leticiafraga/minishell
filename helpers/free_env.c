@@ -15,11 +15,13 @@
 void free_env(linked_list_t *list)
 {
     linked_list_t *next;
+    env_item_t *item;
 
     while (list != 0) {
         next = list->next;
-        free(list->data->key);
-        free(list->data->value);
+        item = list->data;
+        free(item->key);
+        free(item->value);
         free(list->data);
         free(list);
         list = next;

@@ -11,12 +11,15 @@
 
 static int handle_env_inner(char **args, linked_list_t *env)
 {
+    env_item_t *item;
+
     if (env == 0)
         return 0;
+    item = (env_item_t *) env->data;
     handle_env_inner(args, env->next);
-    my_putstr(env->data->key);
+    my_putstr(item->key);
     my_putchar('=');
-    my_putstr(env->data->value);
+    my_putstr(item->value);
     my_putchar('\n');
     return 0;
 }

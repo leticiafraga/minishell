@@ -13,11 +13,13 @@
 void push_unique_to_list(linked_list_t **begin, env_item_t *data)
 {
     linked_list_t *cur = *begin;
+    env_item_t *item;
 
     while (cur != 0) {
-        if (my_strcmp(cur->data->key, data->key) == 0) {
-            free(cur->data->value);
-            cur->data->value = data->value;
+        item = cur->data;
+        if (my_strcmp(item->key, data->key) == 0) {
+            free(item->value);
+            item->value = data->value;
             free(data->key);
             free(data);
             return;

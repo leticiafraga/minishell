@@ -7,8 +7,8 @@ linked_list_t *create_env()
 {
     linked_list_t *env = malloc(sizeof(linked_list_t));
     env->data = malloc(sizeof(env_item_t));
-    env->data->key = my_strdup("PATH");
-    env->data->value = my_strdup("/usr/bin");
+    ((env_item_t *) env->data)->key = my_strdup("PATH");
+    ((env_item_t *) env->data)->value = my_strdup("/usr/bin");
     return env;
 }
 
@@ -25,8 +25,8 @@ global_state_t *create_state()
 void free_state(global_state_t *state)
 {
     linked_list_t *env = *(state->env);
-    free(env->data->key);
-    free(env->data->value);
+    free(((env_item_t *) env->data)->key);
+    free(((env_item_t *) env->data)->value);
     free(env->data);
     free(env);
     free(state->env);

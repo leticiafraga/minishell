@@ -11,10 +11,12 @@
 char *my_getenv(linked_list_t *env, char *var)
 {
     char *value;
+    env_item_t *item;
 
     while (env != 0) {
-        if (my_strcmp(env->data->key, var) == 0) {
-            value = env->data->value;
+        item = env->data;
+        if (my_strcmp(item->key, var) == 0) {
+            value = item->value;
             return value;
         }
         env = env->next;

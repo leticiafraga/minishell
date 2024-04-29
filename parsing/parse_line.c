@@ -64,7 +64,11 @@ static int it_outside_str(char const *str, int i,
 static int it_special_char(char const *str, int i,
     linked_list_t **res)
 {
-    append_to_list(res, create_word(str, i, i));
+    int beg = i;
+
+    if (str[i] == str[i + 1])
+        i++;
+    append_to_list(res, create_word(str, i, beg));
     return i + 1;
 }
 
@@ -88,17 +92,12 @@ static int validate_pos(char const *str, int i,
 linked_list_t *parse_line(char const *str)
 {
     linked_list_t *tokens = 0;
-    linked_list_t *it = tokens;
     int i = 0;
 
     while (str[i] != '\0' && str[i] != '\n') {
         i = validate_pos(str, i, &tokens);
         if (i == -1)
             return 0;
-    }
-    while(it != 0) {
-        printf("%s - ", it->data);
-        it = it->next;
     }
     return tokens;
 }

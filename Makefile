@@ -49,7 +49,8 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/test_handle_unsetenv.c \
 				tests/test_handle_pipe.c \
 				tests/test_handle_redir_stdout.c \
-				tests/test_handle_semicolon.c
+				tests/test_handle_semicolon.c \
+				tests/test_parse_line.c
 
 TESTS	=	unit_tests
 
