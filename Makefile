@@ -35,7 +35,8 @@ SRC_FN	=	./run_prog.c \
 			./parsing/get_cmd_opts.c \
 			./parsing/my_getenv.c \
 			./parsing/parse_args.c \
-			./parsing/parse_line.c
+			./parsing/parse_line.c \
+			./tree/create_tree.c \
 
 SRC     =	main.c	\
 			$(SRC_FN)

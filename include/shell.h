@@ -8,6 +8,7 @@
 #ifndef SHELL_H
     #define SHELL_H
     #include "linked_list.h"
+    #include "tree.h"
     #include "redirection.h"
 
 typedef struct cmd_state_t {
@@ -39,6 +40,8 @@ void append_to_list(linked_list_t **begin, void *data);
 void *delete_in_list(linked_list_t **begin,
     void const *ref, int (*cmp_fct) ());
 int add_item(char *key, char *value, linked_list_t **env);
+
+tree_t *create_tree(linked_list_t *tokens);
 
 void free_env(linked_list_t *list);
 void free_ptr_arr(char **args);
