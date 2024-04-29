@@ -25,12 +25,12 @@ cmd_state_t *getcmd_state(char *args, linked_list_t **env)
         return 0;
     }
     state->arrenv = getenv_arr(*env);
-    state->paths = get_paths(state->cmdargs[0], *env);
+    state->paths = get_paths(*env);
     state->env = env;
     return state;
 }
 
-char **get_paths(char *name, linked_list_t *env)
+char **get_paths(linked_list_t *env)
 {
     char *path_var = my_getenv(env, "PATH");
     char **paths;

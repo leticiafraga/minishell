@@ -9,5 +9,5 @@
 
 int main(int argc, char **argv, char **env)
 {
-    return exec_prompt(argc, argv, env);
+    return exec_prompt(argc, env);
 }

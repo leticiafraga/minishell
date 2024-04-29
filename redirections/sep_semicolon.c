@@ -23,7 +23,7 @@ static int cnt_semicolons(char *line)
     return cnt;
 }
 
-int it_line_semicolon(cmds_arr_t *semic, char *line)
+static void it_line_semicolon(cmds_arr_t *semic, char *line)
 {
     char *newline = my_strdup(line);
     char *token = strtok(newline, ";");
@@ -40,7 +40,6 @@ int it_line_semicolon(cmds_arr_t *semic, char *line)
 
 cmds_arr_t *sep_semicolon(char *line)
 {
-    int len = my_strlen(line);
     cmds_arr_t *semicolons = malloc(sizeof(cmds_arr_t));
     int cnt = cnt_semicolons(line);
 
