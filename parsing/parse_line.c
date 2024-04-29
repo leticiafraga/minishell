@@ -54,7 +54,7 @@ static int it_outside_str(char const *str, int i,
 {
     int beg = i;
 
-    while (str[i] != '\0' && is_word_separator(str, i) == 0) {
+    while (str[i] != '\0' && is_end_of_cmd(str, i) == 0) {
         i++;
     }
     append_to_list(res, create_word(str, i, beg));
@@ -75,11 +75,6 @@ static int it_special_char(char const *str, int i,
 static int validate_pos(char const *str, int i,
     linked_list_t **res)
 {
-    if (is_inhibitor(str[i])) {
-        i = it_inside_str(str, i, res);
-        if (i == -1)
-            return -1;
-    }
     if (is_special_char(str[i])) {
         return it_special_char(str, i, res);
     }

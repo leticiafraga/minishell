@@ -42,6 +42,7 @@ void *delete_in_list(linked_list_t **begin,
 int add_item(char *key, char *value, linked_list_t **env);
 
 tree_t *create_tree(linked_list_t *tokens);
+int run_tree(tree_t *root, global_state_t *state);
 
 void free_env(linked_list_t *list);
 void free_ptr_arr(char **args);

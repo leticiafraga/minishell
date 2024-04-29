@@ -14,5 +14,6 @@ int is_word_separator(char const *str, int i);
 int is_new_word(char const *str, int i);
 char *concat_strings(int num_strings, ...);
 int is_special_char(char c);
+int is_end_of_cmd(char const *str, int i);
 
 #endif

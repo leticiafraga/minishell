@@ -18,6 +18,7 @@ SRC_FN	=	./run_prog.c \
 			./list/add_item.c \
 			./list/append_to_list.c \
 			./helpers/args_parsing.c \
+			./helpers/parse_line_helpers.c \
 			./helpers/clear_filename.c \
 			./helpers/getenv_list.c \
 			./helpers/free_env.c \
@@ -37,6 +38,7 @@ SRC_FN	=	./run_prog.c \
 			./parsing/parse_args.c \
 			./parsing/parse_line.c \
 			./tree/create_tree.c \
+			./run_tree.c
 
 SRC     =	main.c	\
 			$(SRC_FN)

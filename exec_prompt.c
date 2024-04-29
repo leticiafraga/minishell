@@ -57,12 +57,13 @@ void print_tree(tree_t *root, int level)
     print_tree(root->right, level + 1);
 }
 
-static int exec_line(char *line)
+static int exec_line(char *line, global_state_t *state)
 {
     linked_list_t *list = parse_line(line);
     tree_t *tree = create_tree(list);
 
     print_tree(tree, 0);
+    run_tree(tree, state);
     return 0;
 }
 
@@ -82,7 +83,7 @@ int prompt(size_t bufsize, char *line, global_state_t *state)
             status = 0;
             break;
         }
-        status = exec_line(line);
+        status = exec_line(line, state);
     }
     return status;
 }
