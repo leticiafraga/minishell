@@ -18,7 +18,7 @@ typedef struct cmd_state_t {
     linked_list_t **env;
 } cmd_state_t;
 
-int exec_prompt(int argc, char **argv, char **env);
+int exec_prompt(int argc, char **env);
 int run_prog(char *argv, global_state_t *g_state);
 int it_semicolons(global_state_t *state, char *line);
 char *my_getenv(linked_list_t *env, char *var);
@@ -39,7 +39,7 @@ void push_unique_to_list(linked_list_t **begin, env_item_t *data);
 void append_to_list(linked_list_t **begin, void *data);
 void *delete_in_list(linked_list_t **begin,
     void const *ref, int (*cmp_fct) ());
-int add_item(char *key, char *value, linked_list_t **env);
+void add_item(char *key, char *value, linked_list_t **env);
 
 tree_t *create_tree(linked_list_t *tokens);
 int run_tree(tree_t *root, global_state_t *state);
@@ -53,7 +53,7 @@ char *clear_filename(char *prev);
 
 void put_arg_err(char *arg, char *err);
 
-char **get_paths(char *name, linked_list_t *env);
+char **get_paths(linked_list_t *env);
 char **parse_args(char const *str);
 linked_list_t *parse_line(char const *str);
 

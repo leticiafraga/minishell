@@ -36,8 +36,6 @@ static int handle_out(cmd_opts_t *red, global_state_t *state)
 
 static int run_cmds(global_state_t *state)
 {
-    int status = 0;
-    sep_t symbol;
     cmd_opts_t *red = state->red_inner;
 
     if (red->in) {
@@ -114,8 +112,7 @@ static int handle_last(char *args, global_state_t *g_state)
     return status;
 }
 
-// WARN: int function no return
-static int restore_copies(int copies[2])
+static void restore_copies(int copies[2])
 {
     dup2(copies[0], 0);
     dup2(copies[1], 1);
@@ -123,7 +120,6 @@ static int restore_copies(int copies[2])
 
 static int pipe_inner(global_state_t *state)
 {
-    linked_list_t **env = state->env;
     cmds_arr_t *red = state->cmd;
     int p_read = 0;
     int status;

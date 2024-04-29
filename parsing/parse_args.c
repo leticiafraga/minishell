@@ -113,10 +113,6 @@ char **it_str(char const *str, int cnt)
 
 char **parse_args(char const *str)
 {
-    int i = 0;
-    int beg = 0;
-    int words = 0;
-    char **res;
     int cnt = count_words(str);
 
     if (cnt == -1)

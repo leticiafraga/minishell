@@ -47,7 +47,7 @@ cmds_arr_t *sep_semicolon(char *line);
 cmd_opts_t *get_cmd_opts(char *semic);
 cmds_arr_t **sep_pipes(cmds_arr_t *semic);
 
-int free_cmds_arr(cmds_arr_t *r);
+void free_cmds_arr(cmds_arr_t *r);
 void free_ptr_arr_content(char **args);
 
 int handle_semicolon(

@@ -58,6 +58,8 @@ TEST_SRC	= 	$(SRC_FN)	\
 
 TESTS	=	unit_tests
 
+CFLAGS	=	-Wall -Wextra
+
 CRFLAGS	=	--coverage -lcriterion
 
 OBJ	=	$(SRC:.c=.o)
@@ -76,7 +78,7 @@ lib:
 	cd lib/my && make && cd ../..
 
 $(NAME):	$(OBJ)
-	gcc -o $(NAME) $(OBJ) -L./lib/my -lmy -I./include/ -Wall -Wextra
+	gcc -o $(NAME) $(OBJ) -L./lib/my -lmy -I./include/
 
 $(MY_SEGFAULT):	$(OBJ_SEGFAULT)
 	gcc -o $(MY_SEGFAULT) $(OBJ_SEGFAULT) -Wall -Wextra
