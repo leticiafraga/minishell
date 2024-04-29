@@ -22,7 +22,7 @@ static int handle_old(char *path, linked_list_t **env)
     return status;
 }
 
-static int handle_home(char *path, linked_list_t **env)
+static int handle_home(linked_list_t **env)
 {
     int status = 0;
     char *home = my_getenv(*env, "HOME");
@@ -42,7 +42,7 @@ static int exec_cd(char *path, linked_list_t **env)
     int status = 0;
 
     if (path == 0 || my_strcmp(path, "~") == 0)
-        status = handle_home(path, env);
+        status = handle_home(env);
     else if (my_strcmp(path, "-") == 0) {
         status = handle_old(path, env);
     } else

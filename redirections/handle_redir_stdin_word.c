@@ -34,7 +34,7 @@ static void handle_tty(void)
 
 static char *get_whole_str(global_state_t *state, char *word)
 {
-    size_t characters;
+    size_t characters = 0;
     size_t bufsize = 500;
     char *line = malloc(sizeof(char) * 500);
     char *str = malloc(sizeof(char) * 1000);

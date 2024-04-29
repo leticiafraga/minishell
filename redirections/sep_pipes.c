@@ -41,7 +41,6 @@ int it_line_pipe(cmds_arr_t *pipes, char *line)
 
 cmds_arr_t **sep_pipes(cmds_arr_t *semicolons)
 {
-    int len;
     cmds_arr_t *current_cmd;
     cmds_arr_t **pipes_list = malloc(
         sizeof(cmds_arr_t *) * (semicolons->cnt + 1));
@@ -49,7 +48,6 @@ cmds_arr_t **sep_pipes(cmds_arr_t *semicolons)
 
     for (int i = 0; i < semicolons->cnt; i++) {
         current_cmd = malloc(sizeof(cmds_arr_t));
-        len = my_strlen(semicolons->arr[i]);
         cnt = cnt_pipes(semicolons->arr[i]);
         current_cmd->cnt = 0;
         current_cmd->arr = malloc(sizeof(char *) * (cnt + 1));

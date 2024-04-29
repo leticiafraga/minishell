@@ -15,7 +15,6 @@
 env_item_t *getenv_item(char *value)
 {
     env_item_t *item = malloc(sizeof(env_item_t));
-    int sep_t = 0;
     char *tok = strtok(value, "=");
 
     item->key = my_strdup(tok);

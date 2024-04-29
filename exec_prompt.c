@@ -68,7 +68,7 @@ int prompt(size_t bufsize, char *line, global_state_t *state)
     return status;
 }
 
-int exec_prompt(int argc, char **argv, char **env)
+int exec_prompt(int argc, char **env)
 {
     size_t bufsize = 500;
     int status = 84;
