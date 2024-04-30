@@ -5,40 +5,56 @@
 ## makefile
 ##
 
-SRC_FN	=	run_prog.c \
-			exec_prompt.c \
-			handle_commands/handle_cd.c \
-			handle_commands/handle_env.c \
-			handle_commands/handle_exec.c \
-			handle_commands/handle_setenv.c \
-			handle_commands/handle_unsetenv.c \
-			list/push_to_list.c \
-			list/push_unique_to_list.c \
-			list/delete_in_list.c \
-			list/add_item.c \
-			my_getenv.c \
-			helpers/clear_filename.c \
-			helpers/getenv_list.c \
-			helpers/free_env.c \
-			helpers/put_arg_err.c \
-			helpers/free_seps.c \
-			redirections/handle_semicolon.c \
-			redirections/handle_pipe.c \
-			redirections/handle_redir_stdout.c \
-			redirections/handle_redir_stdout_append.c \
-			redirections/handle_redir_stdin.c \
-			redirections/sep_pipes.c \
-			redirections/sep_semicolon.c \
-			find_seps_red.c
+SRC_FN	=	./run_prog.c \
+			./exec_prompt.c \
+			./handle_commands/handle_cd.c \
+			./handle_commands/handle_env.c \
+			./handle_commands/handle_exec.c \
+			./handle_commands/handle_setenv.c \
+			./handle_commands/handle_unsetenv.c \
+			./list/push_to_list.c \
+			./list/push_unique_to_list.c \
+			./list/delete_in_list.c \
+			./list/add_item.c \
+			./list/append_to_list.c \
+			./helpers/args_parsing.c \
+			./helpers/parse_line_helpers.c \
+			./helpers/clear_filename.c \
+			./helpers/getenv_list.c \
+			./helpers/free_env.c \
+			./helpers/put_arg_err.c \
+			./helpers/free_seps.c \
+			./helpers/concat_strings.c\
+			./redirections/handle_semicolon.c \
+			./redirections/handle_redir_stdout.c \
+			./redirections/handle_redir_stdout_append.c \
+			./redirections/handle_redir_stdin.c \
+			./redirections/handle_redir_stdin_word.c \
+			./redirections/handle_pipe.c \
+			./parsing/my_getenv.c \
+			./parsing/parse_args.c \
+			./parsing/parse_line.c \
+			./tree/create_tree.c \
+			./run_tree.c
 
 SRC     =	main.c	\
 			$(SRC_FN)
 
 TEST_SRC	= 	$(SRC_FN)	\
-				tests/create_env.c \
+				tests/test_helpers.c \
 				tests/test_exec_prompt.c \
+				tests/test_handle_cd.c \
+				tests/test_handle_env.c \
+				tests/test_handle_setenv.c \
+				tests/test_handle_unsetenv.c \
+				tests/test_handle_pipe.c \
+				tests/test_handle_redir_stdout.c \
+				tests/test_handle_semicolon.c \
+				tests/test_parse_line.c
 
 TESTS	=	unit_tests
+
+CFLAGS	=	-Wall -Wextra
 
 CRFLAGS	=	--coverage -lcriterion
 
@@ -58,7 +74,7 @@ lib:
 	cd lib/my && make && cd ../..
 
 $(NAME):	$(OBJ)
-	gcc -o $(NAME) $(OBJ) -L./lib/my -lmy -I./include/ -Wall -Wextra
+	gcc -o $(NAME) $(OBJ) -L./lib/my -lmy -I./include/
 
 $(MY_SEGFAULT):	$(OBJ_SEGFAULT)
 	gcc -o $(MY_SEGFAULT) $(OBJ_SEGFAULT) -Wall -Wextra

@@ -25,32 +25,23 @@ static void handle_tty(global_state_t *state)
         if (state->pwd) {
             printf("%s", state->pwd);
         }
-        printf("\033[33m> ");
+        printf("> ");
         printf("\033[0;0m");
     }
 }
 
-int it_semicolons(global_state_t *state, char *line)
+int exec_line(char *line, global_state_t *state)
 {
-    cmds_arr_t **r;
-    int status = 0;
-    cmds_arr_t *s = sep_semicolon(line);
+    linked_list_t *list = parse_line(line);
+    tree_t *tree = create_tree(list);
 
-    r = sep_pipes(s);
-    for (int i = 0; i < s->cnt; i++) {
-        state->cmd = r[i];
-        status = it_pipes(state);
-        free_cmds_arr(r[i]);
-    }
-    free(r);
-    free_cmds_arr(s);
-    return status;
+    return run_tree(tree, state);
 }
 
 int prompt(size_t bufsize, char *line, global_state_t *state)
 {
     int status = 0;
-    size_t characters;
+    int characters;
 
     while (1) {
         handle_tty(state);
@@ -63,25 +54,25 @@ int prompt(size_t bufsize, char *line, global_state_t *state)
             status = 0;
             break;
         }
-        status = it_semicolons(state, line);
+        status = exec_line(line, state);
     }
     return status;
 }
 
-int exec_prompt(int argc, char **argv, char **env)
+int exec_prompt(int argc, char **env)
 {
     size_t bufsize = 500;
-    size_t characters;
     int status = 84;
     char line[500];
     linked_list_t *listenv = getenv_list(env);
     global_state_t state;
 
     state.env = &listenv;
-    state.pwd = my_getenv(listenv, "PWD");
+    state.pwd = my_strdup(my_getenv(listenv, "PWD"));
     if (argc == 1) {
         status = prompt(bufsize, line, &state);
     }
+    free(state.pwd);
     free_env(listenv);
     return status;
 }

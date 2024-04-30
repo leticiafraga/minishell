@@ -10,7 +10,7 @@
     #include "env_item.h"
 
 typedef struct linked_list_s {
-    env_item_t *data;
+    void *data;
     struct linked_list_s *next;
 } linked_list_t;
 

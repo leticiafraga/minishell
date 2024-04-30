@@ -294,3 +294,45 @@ TESTS=
   echo "cat out"
   echo "rm out"
 [106-END]
+
+[107]
+NAME="redirection stdin with word"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "cat<<end"
+  echo "aaaaaaaaaaaa"
+  echo "end"
+[107-END]
+
+[108]
+NAME="Many separators"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls; ls -la ; ls;ls;ls"
+[108-END]
+
+[109]
+NAME="pipe with builtin"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "env| grep PATH"
+[109-END]
+
+[200]
+NAME="basic inhibitor"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "echo '42 sh'"
+[200-END]
+
+[201]
+NAME="another inhibitor"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "echo \"42 sh\""
+[201-END]

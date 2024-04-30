@@ -9,25 +9,6 @@
 #include "../include/shell.h"
 #include <stdlib.h>
 
-int free_seps(redirection_list_t *r)
-{
-    for (int i = 0; i < r->cnt; i++) {
-        free(r->arr[i]->cmd);
-        free(r->arr[i]);
-    }
-    free(r->arr);
-    free(r);
-}
-
-int free_cmds_arr(cmds_arr_t *r)
-{
-    for (int i = 0; i < r->cnt; i++) {
-        free(r->arr[i]);
-    }
-    free(r->arr);
-    free(r);
-}
-
 void free_vars(char **args, char **arr, char **paths)
 {
     free_ptr_arr(args);

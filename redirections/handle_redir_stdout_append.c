@@ -14,9 +14,9 @@
 #include "../include/linked_list.h"
 
 int handle_redir_stdout_append(
-    char *args, global_state_t *state)
+    tree_t *root, global_state_t *state)
 {
-    char *filename = clear_filename(args);
+    char *filename = clear_filename(root->right->data);
     int fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0644);
     int dupout = dup(1);
     int status;
@@ -24,7 +24,7 @@ int handle_redir_stdout_append(
     close(1);
     dup(fd);
     close(fd);
-    status = run_prog(args, state);
+    status = run_tree(root->left, state);
     dup2(dupout, 1);
     close(dupout);
     free(filename);
