@@ -37,35 +37,50 @@ static tree_t *create_node(char *command)
     return node;
 }
 
-static tree_t *add_item_tree(tree_t **root,
-    char *cur_token, tree_t *prev_node)
+static void add_item_tree_before(tree_t *node,
+    tree_t *cur, tree_t *prev, tree_t **root)
+{
+    node->left = cur;
+    if (cur == *root)
+        *root = node;
+    else if (prev)
+        prev->right = node;
+}
+
+static void add_item_tree(tree_t **root,
+    char *cur_token)
 {
     tree_t *node = create_node(cur_token);
+    tree_t *cur = *root;
+    tree_t *prev = 0;
 
     if ((*root) == 0) {
         *root = node;
-        return node;
+        return;
     }
-    if (node->type >= prev_node->type) {
-        node->left = prev_node->right;
-        prev_node->right = node;
-    } else {
-        node->left = (*root);
-        (*root) = node;
+    while (1) {
+        if (node->type < cur->type) {
+            add_item_tree_before(node, cur, prev, root);
+            break;
+        }
+        if (cur->right == 0) {
+            cur->right = node;
+            break;
+        }
+        prev = cur;
+        cur = prev->right;
     }
-    return node;
 }
 
 tree_t *create_tree(linked_list_t *tokens)
 {
     linked_list_t *cur_pos = tokens;
     tree_t *root = NULL;
-    tree_t *prev_node = NULL;
     char *cur_token;
 
     while (cur_pos != 0) {
         cur_token = cur_pos->data;
-        prev_node = add_item_tree(&root, cur_token, prev_node);
+        add_item_tree(&root, cur_token);
         cur_pos = cur_pos->next;
     }
     return root;
