@@ -79,9 +79,8 @@ static int it_outside_str(char const *str, int i,
     if (is_word_separator(str, i) == 1) {
         res[*word_cnt] = create_word(str, i, beg);
         (*word_cnt) += 1;
-        return i + 1;
     }
-        return i;
+    return i;
 }
 
 int validate_pos(char const *str, int i, char **res, int *word_cnt)
