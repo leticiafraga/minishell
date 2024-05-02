@@ -83,9 +83,9 @@ int run_tree(tree_t *root, global_state_t *state)
     case OP_SEMICOLON:
         return handle_semicolon(root, state);
     case OP_AND:
-        return handle_semicolon(root, state);
+        return handle_and(root, state);
     case OP_OR:
-        return handle_semicolon(root, state);
+        return handle_or(root, state);
     case OP_PIPE:
         return handle_pipe(root, state);
     default:

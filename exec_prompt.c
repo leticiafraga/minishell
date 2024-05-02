@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include "include/my.h"
 #include "include/shell.h"
+#include "include/helpers.h"
 #include "include/linked_list.h"
 
 int is_exit(char *line)
