@@ -69,7 +69,7 @@ static int validate_inhibitors(char const *line)
     int i = 0;
 
     while (line[i] != '\0' && line[i] != '\n') {
-        if (is_inhibitor(line[i])) {
+        if (is_inhibitor(line[i]) || line[i] == '`') {
             i = it_inhibitors(line, i);
         }
         if (i == -1)

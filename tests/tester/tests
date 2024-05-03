@@ -380,3 +380,35 @@ TESTS=
   echo "ls aa || cat ../cattest && cat ../cattest"
   echo "cat nofile || cat tests/cattest; cat tests/cattest && cat nofile && cat tests/cattest"
 [206-END]
+
+[207]
+NAME="Unmatched '"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls 'aa || ( cat ../cattest"
+[207-END]
+
+[208]
+NAME="Unmatched ("
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls aa || (cat ../cattest"
+[208-END]
+
+[209]
+NAME="Unmatched )"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls aa || )cat ../cattest"
+[209-END]
+
+[210]
+NAME="Unmatched \`"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls \`aa || ( cat ../cattest"
+[210-END]
