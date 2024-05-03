@@ -37,6 +37,7 @@ SRC_FN	=	./run_prog.c \
 			./parsing/my_getenv.c \
 			./parsing/parse_args.c \
 			./parsing/parse_line.c \
+			./parsing/line_error_handling.c \
 			./tree/create_tree.c \
 			./run_tree.c
 

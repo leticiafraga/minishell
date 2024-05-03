@@ -59,6 +59,9 @@ linked_list_t *parse_line(char const *str)
     linked_list_t *tokens = 0;
     int i = 0;
 
+    
+    if (line_error_handling(str))
+        return 0;
     while (str[i] != '\0' && str[i] != '\n') {
         i = validate_pos(str, i, &tokens);
         if (i == -1)

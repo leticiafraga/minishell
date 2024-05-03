@@ -34,9 +34,14 @@ static void handle_tty(global_state_t *state)
 int exec_line(char *line, global_state_t *state)
 {
     linked_list_t *list = parse_line(line);
-    tree_t *tree = create_tree(list);
-    int status = run_tree(tree, state);
+    tree_t *tree;
+    int status;
 
+    if (list == 0){
+        return 1;
+    }
+    tree = create_tree(list);
+    status = run_tree(tree, state);
     free_list(list);
     free_tree(tree);
     return status;
