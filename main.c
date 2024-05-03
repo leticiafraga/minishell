@@ -9,5 +9,7 @@
 
 int main(int argc, char **argv, char **env)
 {
+    if (argv == 0)
+        return 84;
     return exec_prompt(argc, env);
 }

@@ -336,3 +336,47 @@ CLEAN=""
 TESTS=
   echo "echo \"42 sh\""
 [201-END]
+
+[202]
+NAME="&&"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls aa && cat ../cattest"
+[202-END]
+
+[203]
+NAME="&& and ;"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls aa && cat ../cattest"
+  echo "ls aa ; cat ../cattest"
+[203-END]
+
+[204]
+NAME="||"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls aa || cat ../cattest"
+[204-END]
+
+[205]
+NAME="|| and ;"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls aa || cat ../cattest"
+  echo "ls aa ; cat ../cattest"
+[205-END]
+
+[206]
+NAME="&& and || and ;"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls aa && cat ../cattest || cat ../cattest"
+  echo "ls aa || cat ../cattest && cat ../cattest"
+  echo "cat nofile || cat tests/cattest; cat tests/cattest && cat nofile && cat tests/cattest"
+[206-END]

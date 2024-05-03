@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include "include/my.h"
 #include "include/shell.h"
+#include "include/helpers.h"
 #include "include/linked_list.h"
 
 int is_exit(char *line)
@@ -34,8 +35,11 @@ int exec_line(char *line, global_state_t *state)
 {
     linked_list_t *list = parse_line(line);
     tree_t *tree = create_tree(list);
+    int status = run_tree(tree, state);
 
-    return run_tree(tree, state);
+    free_list(list);
+    free_tree(tree);
+    return status;
 }
 
 int prompt(size_t bufsize, char *line, global_state_t *state)

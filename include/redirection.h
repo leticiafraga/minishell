@@ -20,6 +20,8 @@ void free_ptr_arr_content(char **args);
 
 int handle_semicolon(
     tree_t *root, global_state_t *state);
+int handle_and(tree_t *root, global_state_t *state);
+int handle_or(tree_t *root, global_state_t *state);
 int handle_redir_stdin(
     tree_t *root, global_state_t *state);
 int handle_redir_stdin_word(

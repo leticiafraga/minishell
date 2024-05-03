@@ -10,6 +10,8 @@
 
 typedef enum operator_t {
     OP_SEMICOLON,
+    OP_OR,
+    OP_AND,
     OP_PIPE,
     OP_IN1,
     OP_IN2,
