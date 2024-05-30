@@ -10,7 +10,7 @@ on:
             - "ga-ignore-**"
 
 env:
-    EXECUTABLES: "mysh"
+    EXECUTABLES: "42sh"
 
 jobs:
     check_coding_style:
