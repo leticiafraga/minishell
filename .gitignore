@@ -8,6 +8,7 @@ a.out
 *.json
 
 mysh
+42sh
 
 unit_tests
 my_segfault

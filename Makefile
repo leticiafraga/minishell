@@ -71,7 +71,7 @@ MY_SEGFAULT	=	tests/my_segfault
 
 OBJ_SEGFAULT	=	$(MY_SEGFAULT_SRC:.c=.o)
 
-NAME	=	mysh
+NAME	=	42sh
 
 all:	lib $(NAME)
 
@@ -99,7 +99,7 @@ fclean:	clean
 re:     fclean all
 
 tester:		all
-	cd tests/tester && cp ../../mysh . && ./tester.sh
+	cd tests/tester && cp ../../$(NAME) ./mysh && ./tester.sh
 
 coding-style:	fclean
 	coding-style . . &&	cat coding-style-reports.log
