@@ -7,9 +7,9 @@ Shell implemented in C based on TCSH
 ```
 $ make
 $ ./42sh
-/home/pwd> echo 'hello'
+$/home/current-directory> echo 'hello'
 hello
-/home/pwd> exit
+$/home/current-directory> exit
 $
 ```
 
