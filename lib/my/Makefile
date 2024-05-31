@@ -13,6 +13,7 @@ SRC	=	helpers.c	\
 		my_strcmp.c	\
 		my_strcpy.c	\
 		my_strdup.c \
+		my_str_isalphanum.c \
 		my_strncat.c	\
 		my_strncpy.c	\
 		my_str_to_word_array.c	\

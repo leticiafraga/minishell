@@ -75,13 +75,18 @@ int exec_prompt(int argc, char **env)
     char line[500];
     linked_list_t *listenv = getenv_list(env);
     global_state_t state;
+    char *init_pwd = my_getenv(listenv, "PWD");
 
     state.env = &listenv;
-    state.pwd = my_strdup(my_getenv(listenv, "PWD"));
+    if (init_pwd)
+        state.pwd = strdup(init_pwd);
+    else
+        state.pwd = 0;
     if (argc == 1) {
         status = prompt(bufsize, line, &state);
     }
-    free(state.pwd);
+    if (state.pwd)
+        free(state.pwd);
     free_env(listenv);
     return status;
 }
