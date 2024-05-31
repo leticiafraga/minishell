@@ -4,12 +4,12 @@
 ** File description:
 ** my_strcat
 */
-#include "my.h"
+#include <string.h>
 
 char *my_strcat(char *dest, char const *src)
 {
     int i = 0;
-    int len = my_strlen(dest);
+    int len = strlen(dest);
 
     while (src[i] != '\0') {
         dest[len + i] = src[i];

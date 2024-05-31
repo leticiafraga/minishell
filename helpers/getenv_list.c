@@ -59,8 +59,8 @@ static char *get_dest(env_item_t *item)
     int len2;
     char *dest;
 
-    len1 = my_strlen(item->key);
-    len2 = my_strlen(item->value);
+    len1 = strlen(item->key);
+    len2 = strlen(item->value);
     dest = malloc(sizeof(char) * (len1 + len2 + 2));
     dest[0] = '\0';
     my_strcat(dest, item->key);

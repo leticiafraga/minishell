@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "../include/my.h"
+#include <string.h>
 
 static int is_not_space(char c)
 {
@@ -16,7 +16,7 @@ static int is_not_space(char c)
 
 char *clear_filename(char *prev)
 {
-    int len = my_strlen(prev);
+    int len = strlen(prev);
     char *new = malloc(sizeof(char) * len);
     int cnt = 0;
 

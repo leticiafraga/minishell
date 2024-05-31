@@ -5,12 +5,12 @@
 ** Function that duplicates a string and returns it
 */
 
-#include "my.h"
+#include <string.h>
 #include <stdlib.h>
 
 char *my_strdup(char const *src)
 {
-    char *str = malloc(sizeof(char) * (my_strlen(src) + 1));
+    char *str = malloc(sizeof(char) * (strlen(src) + 1));
     int i = -1;
 
     do {

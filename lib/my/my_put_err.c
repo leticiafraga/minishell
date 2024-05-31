@@ -6,11 +6,11 @@
 */
 
 #include <unistd.h>
-#include "my.h"
+#include <string.h>
 
 void my_put_err(char *str)
 {
-    int len = my_strlen(str);
+    int len = strlen(str);
 
     write(2, str, len);
 }
