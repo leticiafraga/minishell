@@ -80,6 +80,8 @@ int run_tree(tree_t *root, global_state_t *state)
     if (root == NULL)
         return 0;
     switch (root->type) {
+    case OP_BACKTICKS:
+        return handle_backticks(root, state);
     case STRING:
         return exec_cmd(root, state);
     case OP_SEMICOLON:

@@ -448,3 +448,12 @@ CLEAN=""
 TESTS=
   echo "ls \`aa || ( cat ../cattest"
 [212-END]
+
+[213]
+NAME="Backticks `"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "echo \`uname -n\`"
+  echo "echo \`ls | wc\`"
+[213-END]

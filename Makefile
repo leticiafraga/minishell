@@ -20,6 +20,7 @@ SRC_FN	=	./run_prog.c \
 			./list/clone_list_env.c \
 			./helpers/args_parsing.c \
 			./helpers/clear_filename.c \
+			./helpers/clear_str.c \
 			./helpers/concat_strings.c\
 			./helpers/free_env.c \
 			./helpers/free_seps.c \
@@ -29,6 +30,7 @@ SRC_FN	=	./run_prog.c \
 			./helpers/put_arg_err.c \
 			./redirections/handle_semicolon.c \
 			./redirections/handle_and.c \
+			./redirections/handle_backticks.c \
 			./redirections/handle_or.c \
 			./redirections/handle_redir_stdout.c \
 			./redirections/handle_redir_stdout_append.c \

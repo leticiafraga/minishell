@@ -49,7 +49,6 @@ int run_tree(tree_t *root, global_state_t *state);
 void free_env(linked_list_t *list);
 void free_ptr_arr(char **args);
 void free_ptr_arr_content(char **args);
-void free_vars(char **args, char **arr, char **paths);
 void free_cmd_state(cmd_state_t *state);
 char *clear_filename(char *prev);
 

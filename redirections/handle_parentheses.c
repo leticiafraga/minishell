@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "../include/my.h"
 #include "../include/shell.h"
+#include <string.h>
 
 int handle_parentheses(tree_t *root, global_state_t *state)
 {
@@ -17,7 +18,7 @@ int handle_parentheses(tree_t *root, global_state_t *state)
 
     env = clone_list_env(state->env);
     new_state.env = &env;
-    new_state.pwd = my_strdup(state->pwd);
+    new_state.pwd = strdup(state->pwd);
     status = exec_line(root->right->data, &new_state);
     free_env(env);
     free(new_state.pwd);

@@ -16,3 +16,15 @@ Test(handle_parentheses_test, basic_test, .init=cr_redirect_stdout)
     cr_assert_stdout_eq_str("      1       1       7\n");
     free_state(state);
 }
+
+Test(handle_backticks_test, basic_test, .init=cr_redirect_stdout)
+{
+    global_state_t *state = create_state();
+    char *s = "echo `ls main.c | wc`";
+
+    int res = exec_line(s, state);
+
+    cr_assert_eq(res, 0);
+    cr_assert_stdout_eq_str("1 1 7\n");
+    free_state(state);
+}

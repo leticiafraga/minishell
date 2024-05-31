@@ -20,5 +20,6 @@ int is_end_of_cmd(char const *str, int i);
 void print_tree(tree_t *root, int level);
 void free_tree(tree_t *tree);
 void free_list(linked_list_t *list);
+char *clear_str(char *prev);
 
 #endif

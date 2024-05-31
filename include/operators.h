@@ -18,6 +18,7 @@ const char *OPERATORS[] = {
     ">",
     ">>",
     "(",
+    "`",
     0
 };
 
