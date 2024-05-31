@@ -4,26 +4,24 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
-Test(it_pipes_test, basic_test, .init=cr_redirect_stdout)
+Test(handle_dollar, basic_test, .init=cr_redirect_stdout)
 {
     global_state_t *state = create_state();
-    char *s = "ls | grep run_prog.c";
+    char *s = "echo $PATH";
 
     int res = exec_line(s, state);
 
     cr_assert_eq(res, 0);
-    cr_assert_stdout_eq_str("run_prog.c\n");
-    free_state(state);
+    cr_assert_stdout_eq_str("/usr/bin\n");
 }
 
-Test(it_pipes_test, multiple_pipe, .init=cr_redirect_stdout)
+Test(handle_dollar, no_variable, .init=cr_redirect_stdout)
 {
     global_state_t *state = create_state();
-    char *s = "ls | grep run_prog.c | wc -l";
+    char *s = "echo $aa";
 
     int res = exec_line(s, state);
 
     cr_assert_eq(res, 0);
-    cr_assert_stdout_eq_str("1\n");
-    free_state(state);
+    cr_assert_stdout_eq_str("\n");
 }

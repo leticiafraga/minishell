@@ -57,9 +57,10 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/test_handle_setenv.c \
 				tests/test_handle_unsetenv.c \
 				tests/test_handle_pipe.c \
-				tests/test_handle_redir_stdout.c \
+				tests/test_handle_redir.c \
 				tests/test_handle_semicolon.c \
 				tests/test_handle_and_or.c \
+				tests/test_handle_dollar.c \
 				tests/test_handle_parentheses.c \
 				tests/test_parse_line.c
 
@@ -71,12 +72,6 @@ CRFLAGS	=	--coverage -lcriterion
 
 OBJ	=	$(SRC:.c=.o)
 
-MY_SEGFAULT_SRC	=	tests/my_segfault.c
-
-MY_SEGFAULT	=	tests/my_segfault
-
-OBJ_SEGFAULT	=	$(MY_SEGFAULT_SRC:.c=.o)
-
 NAME	=	42sh
 
 all:	lib $(NAME)
@@ -87,20 +82,17 @@ lib:
 $(NAME):	$(OBJ)
 	gcc -o $(NAME) $(OBJ) -L./lib/my -lmy -I./include/
 
-$(MY_SEGFAULT):	$(OBJ_SEGFAULT)
-	gcc -o $(MY_SEGFAULT) $(OBJ_SEGFAULT) -Wall -Wextra
-
-tests_run: $(MY_SEGFAULT) lib
+tests_run: lib
 	gcc -o $(TESTS) $(TEST_SRC) $(CRFLAGS) -L./lib/my -lmy
 	./$(TESTS)
 
 clean:
 	cd lib/my && make clean && cd ../..
-	rm -f $(OBJ) $(OBJ_SEGFAULT) *~ ./lib/my/*.o *.gcda *.gcno
+	rm -f $(OBJ) *~ ./lib/my/*.o *.gcda *.gcno
 
 fclean:	clean
 	cd lib/my && make fclean && cd ../..
-	rm -f $(NAME) $(TESTS) $(MY_SEGFAULT) lsresult*
+	rm -f $(NAME) $(TESTS) lsresult*
 
 re:     fclean all
 
@@ -110,4 +102,4 @@ tester:		all
 coding-style:	fclean
 	coding-style . . &&	cat coding-style-reports.log
 
-.PHONY: lib $(NAME) $(MY_SEGFAULT)
+.PHONY: lib $(NAME)

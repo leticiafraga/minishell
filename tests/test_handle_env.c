@@ -1,5 +1,4 @@
 #include "../include/shell.h"
-#include "../include/my.h"
 #include "tests.h"
 #include <stdlib.h>
 #include <criterion/criterion.h>

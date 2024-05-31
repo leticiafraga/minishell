@@ -94,7 +94,7 @@ NAME="Launch segfault program with core dump"
 SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
 CLEAN=""
 TESTS=
-  echo "segfault/my_segfault"
+  echo "../segfault/my_segfault"
 [909-END]
 
 [1]
@@ -457,3 +457,12 @@ TESTS=
   echo "echo \`uname -n\`"
   echo "echo \`ls | wc\`"
 [213-END]
+
+[214]
+NAME="Env variables"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "echo $PATH"
+  echo "echo $aa"
+[214-END]
