@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** MY_STRCMP
 ** File description:
 ** Reproduce the behavior of the strcmp function.

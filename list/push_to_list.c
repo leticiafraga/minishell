@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** push_to_list
 ** File description:
 ** push_to_list

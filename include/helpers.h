@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** HELPERS_H
 ** File description:
 ** Shell lib header

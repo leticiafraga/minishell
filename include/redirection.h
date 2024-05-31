@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** redirection specifiers
 ** File description:
 ** Header file for redirection specifiers in minishell

@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** MY_PUTSTR
 ** File description:
 ** Function that displays, one-by-one, the characters of a string.

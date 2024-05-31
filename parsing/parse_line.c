@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** parse_line
 ** File description:
 ** Function that parses line separating it in tokens

@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** MY_STR_TO_WORD_ARRAY
 ** File description:
 ** Function that splits a string into words.

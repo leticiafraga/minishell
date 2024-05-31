@@ -1,6 +1,6 @@
 /*
-** EPITECH PROJECT, 2023
-** Organized
+** EPITECH PROJECT, 2024
+** MINISHELL
 ** File description:
 ** TESTS_H
 */

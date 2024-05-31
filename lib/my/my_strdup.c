@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** MY_STRNCPY
 ** File description:
 ** Function that duplicates a string and returns it

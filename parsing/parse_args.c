@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** parse_args
 ** File description:
 ** Function that splits a string into words with ' ' as inhibitors.

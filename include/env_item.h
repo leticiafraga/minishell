@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2023
+** EPITECH PROJECT, 2024
 ** Minishell
 ** File description:
 ** ENV_ITEM_H
