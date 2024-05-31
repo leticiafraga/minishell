@@ -34,4 +34,5 @@ int handle_pipe(
     tree_t *root, global_state_t *state);
 int handle_parentheses(tree_t *root, global_state_t *state);
 int handle_backticks(tree_t *root, global_state_t *state);
+int handle_dollar(tree_t *root, global_state_t *state);
 #endif

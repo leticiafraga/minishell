@@ -92,6 +92,8 @@ int run_tree(tree_t *root, global_state_t *state)
         return handle_or(root, state);
     case OP_PIPE:
         return handle_pipe(root, state);
+    case OP_DOLLAR:
+        return handle_dollar(root, state);
     default:
         return switch_redirections(root, state);
     }

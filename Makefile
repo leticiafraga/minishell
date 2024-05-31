@@ -32,6 +32,7 @@ SRC_FN	=	./run_prog.c \
 			./redirections/handle_and.c \
 			./redirections/handle_backticks.c \
 			./redirections/handle_or.c \
+			./redirections/handle_dollar.c \
 			./redirections/handle_redir_stdout.c \
 			./redirections/handle_redir_stdout_append.c \
 			./redirections/handle_redir_stdin.c \

@@ -15,8 +15,9 @@ int is_inhibitor(char c)
 
 int is_special_char(char c)
 {
-    return c == ';' || c == '|' || c == '&' || c == '`'
-        || c == '>' || c == '<' || c == '(' || c == ')';
+   return c == ';' || c == '|' || c == '&' || c == '`'
+        || c == '>' || c == '<' || c == '(' || c == ')'
+        || c == '$';
 }
 
 int is_not_space(char c)
