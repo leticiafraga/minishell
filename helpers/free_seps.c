@@ -30,7 +30,8 @@ void free_tree(tree_t *tree)
         return;
     free_tree(tree->left);
     free_tree(tree->right);
-    free(tree->data);
+    if (tree->data)
+        free(tree->data);
     free(tree);
 }
 
@@ -40,6 +41,7 @@ void free_list(linked_list_t *list)
 
     while (list != 0) {
         next = list->next;
+        free(list->data);
         free(list);
         list = next;
     }

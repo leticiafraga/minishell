@@ -17,6 +17,7 @@ SRC_FN	=	./run_prog.c \
 			./list/delete_in_list.c \
 			./list/add_item.c \
 			./list/append_to_list.c \
+			./list/clone_list_env.c \
 			./helpers/args_parsing.c \
 			./helpers/clear_filename.c \
 			./helpers/concat_strings.c\
@@ -33,6 +34,7 @@ SRC_FN	=	./run_prog.c \
 			./redirections/handle_redir_stdout_append.c \
 			./redirections/handle_redir_stdin.c \
 			./redirections/handle_redir_stdin_word.c \
+			./redirections/handle_parentheses.c \
 			./redirections/handle_pipe.c \
 			./parsing/my_getenv.c \
 			./parsing/parse_args.c \
@@ -55,6 +57,7 @@ TEST_SRC	= 	$(SRC_FN)	\
 				tests/test_handle_redir_stdout.c \
 				tests/test_handle_semicolon.c \
 				tests/test_handle_and_or.c \
+				tests/test_handle_parentheses.c \
 				tests/test_parse_line.c
 
 TESTS	=	unit_tests

@@ -31,11 +31,25 @@ static int it_outside_str(char const *str, int i,
     return i + 1;
 }
 
+static int it_parentheses(char const *str, int i,
+    linked_list_t **res)
+{
+    int beg = i + 1;
+
+    append_to_list(res, my_strdup("("));
+    while (str[i + 1] != ')')
+        i++;
+    append_to_list(res, create_word(str, i, beg));
+    return i + 2;
+}
+
 static int it_special_char(char const *str, int i,
     linked_list_t **res)
 {
     int beg = i;
 
+    if (str[i] == '(')
+        return it_parentheses(str, i, res);
     if (str[i] == str[i + 1])
         i++;
     append_to_list(res, create_word(str, i, beg));

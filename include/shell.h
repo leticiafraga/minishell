@@ -41,6 +41,7 @@ void append_to_list(linked_list_t **begin, void *data);
 void *delete_in_list(linked_list_t **begin,
     void const *ref, int (*cmp_fct) ());
 void add_item(char *key, char *value, linked_list_t **env);
+linked_list_t *clone_list_env(linked_list_t **begin);
 
 tree_t *create_tree(linked_list_t *tokens);
 int run_tree(tree_t *root, global_state_t *state);

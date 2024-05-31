@@ -30,7 +30,7 @@ static tree_t *create_node(char *command)
     tree_t *node = (tree_t *) malloc(sizeof(tree_t));
     operator_t type = get_curr_operator(command);
 
-    node->data = command;
+    node->data = my_strdup(command);
     node->type = type;
     node->left = 0;
     node->right = 0;

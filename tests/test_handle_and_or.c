@@ -23,6 +23,18 @@ Test(handle_and_test, basic_test, .init=cr_redirect_stdout)
     free_state(state);
 }
 
+Test(handle_and_test, basic_test_builtin, .init=cr_redirect_stdout)
+{
+    global_state_t *state = create_state();
+    char *s = "cat tests/cattest && cd ..";
+
+    int res = exec_line(s, state);
+
+    cr_assert_eq(res, 0);
+    cr_assert_stdout_eq_str("hola\n");
+    free_state(state);
+}
+
 Test(handle_and_test, runs_only_first_cmd, .init=cr_redirect_stderr)
 {
     global_state_t *state = create_state();

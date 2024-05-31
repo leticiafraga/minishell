@@ -68,6 +68,8 @@ static int switch_redirections(tree_t *root, global_state_t *state)
         return handle_redir_stdout(root, state);
     case OP_OUT2:
         return handle_redir_stdout_append(root, state);
+    case OP_PARENTHESES:
+        return handle_parentheses(root, state);
     default:
         return 0;
     }

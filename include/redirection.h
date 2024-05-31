@@ -32,4 +32,5 @@ int handle_redir_stdout_append(
     tree_t *root, global_state_t *state);
 int handle_pipe(
     tree_t *root, global_state_t *state);
+int handle_parentheses(tree_t *root, global_state_t *state);
 #endif

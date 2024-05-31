@@ -382,33 +382,69 @@ TESTS=
 [206-END]
 
 [207]
+NAME="Parentheses"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls | (cat | wc)"
+[207-END]
+
+[208]
+NAME="Parentheses and setenv and unsetenv"
+SETUP="/usr/bin/env > .lstenv ; while read varenv ; do unset $varenv ; done < <(/bin/cat .lstenv | /usr/bin/cut -f1 -d=) ; export PATH=/bin:/usr/bin ; export _=ls ; export LS_COLORS=RID ; export MYBG=4 ; export LVL=4 ; export NOTE=2"
+CLEAN="while read varenv ; do export "$varenv" 2>/dev/null ; done  < <(/bin/cat .lstenv) ; /bin/rm -f .lstenv"
+TESTS=
+  echo 'unsetenv HOSTTYPE'
+  echo 'unsetenv VENDOR'
+  echo 'unsetenv OSTYPE'
+  echo 'unsetenv MACHTYPE'
+  echo 'unsetenv SHLVL'
+  echo 'unsetenv PWD'
+  echo 'unsetenv LOGNAME'
+  echo 'unsetenv USER'
+  echo 'unsetenv GROUP'
+  echo 'unsetenv HOST'
+  echo 'unsetenv REMOTEHOST'
+  echo 'unsetenv _'
+  echo 'unsetenv LS_COLORS'
+  echo 'unsetenv NOTE'
+  echo 'setenv titi'
+  echo 'setenv tata coucou'
+  echo 'env'
+  echo '/usr/bin/env'
+  echo 'setenv var1 val1'
+  echo 'setenv var2 val2'
+  echo '(setenv aa bb && env) && env'
+[208-END]
+
+[209]
 NAME="Unmatched '"
 SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
 CLEAN=""
 TESTS=
   echo "ls 'aa || ( cat ../cattest"
-[207-END]
+[209-END]
 
-[208]
+[210]
 NAME="Unmatched ("
 SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
 CLEAN=""
 TESTS=
   echo "ls aa || (cat ../cattest"
-[208-END]
+[210-END]
 
-[209]
+[211]
 NAME="Unmatched )"
 SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
 CLEAN=""
 TESTS=
   echo "ls aa || )cat ../cattest"
-[209-END]
+[211-END]
 
-[210]
-NAME="Unmatched \`"
+[212]
+NAME="Unmatched `"
 SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
 CLEAN=""
 TESTS=
   echo "ls \`aa || ( cat ../cattest"
-[210-END]
+[212-END]

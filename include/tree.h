@@ -17,6 +17,7 @@ typedef enum operator_t {
     OP_IN2,
     OP_OUT1,
     OP_OUT2,
+    OP_PARENTHESES,
     STRING,
 } operator_t;
 
