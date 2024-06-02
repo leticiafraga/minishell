@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include "include/my.h"
 #include "include/shell.h"
 #include "include/helpers.h"
